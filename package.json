@@ -1,0 +1,27 @@
+{
+  "name": "peptide_protocoll",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "models": "node list-models.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VikingKadar/peptide_protocoll.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/VikingKadar/peptide_protocoll/issues"
+  },
+  "homepage": "https://github.com/VikingKadar/peptide_protocoll#readme",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
+  }
+}
