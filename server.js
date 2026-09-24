@@ -1,8 +1,9 @@
 const express = require('express');
 const cors = require('cors');
-const fs = require('fs');
 const path = require('path');
 require('dotenv').config();
+const { PEPTIDE_CATALOG } = require('./catalog');
+const { loadKnowledgeBase } = require('./knowledge-base');
 
 const PORT = Number(process.env.PORT) || 3000;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY?.trim();
@@ -15,83 +16,15 @@ if (!GEMINI_API_KEY) {
 }
 
 const app = express();
+// I drift ligger servern bakom hosting-tjänstens proxy — annars ser alla besökare ut som samma IP
+app.set('trust proxy', 1);
 app.use(cors());
 app.use(express.json({ limit: '10kb' }));
 
-const DATA_DIR = path.join(__dirname, 'peptider');
-
-// `sources` pekar på filer i peptider/ som beskriver produkten (wikitides först, sedan forskningsutdrag)
-const PEPTIDE_CATALOG = [
-  { id: 'retatrutide-10', name: 'Retatrutide 10 mg', category: 'VIKTNEDGÅNG', priceSek: 1499, inStock: true, sources: ['_wikitides/retatrutide.txt', 'Retatrutide/exa.txt'] },
-  { id: 'tirzepatide-20', name: 'Tirzepatide 20 mg', category: 'VIKTNEDGÅNG', priceSek: 1799, inStock: true, sources: ['_wikitides/tirzepatide.txt', 'Tirzepatide/exa.txt'] },
-  { id: 'semaglutide-10', name: 'Semaglutide 10 mg', category: 'VIKTNEDGÅNG', priceSek: 699, inStock: true, sources: ['_wikitides/semaglutide.txt', 'Semaglutide/exa.txt'] },
-  { id: 'cagrilintide-10', name: 'Cagrilintide 10 mg', category: 'VIKTNEDGÅNG', priceSek: 899, inStock: true, sources: ['_wikitides/cagrilintide.txt', 'Cagrilintide/exa.txt'] },
-  { id: '5amino1mq-10', name: '5-Amino-1MQ 10 mg', category: 'VIKTNEDGÅNG', priceSek: 599, inStock: true, sources: ['5-Amino-1MQ/exa.txt'] },
-  { id: 'aod9604-10', name: 'AOD-9604 10 mg', category: 'VIKTNEDGÅNG', priceSek: 749, inStock: true, sources: ['_wikitides/aod-9604.txt', 'AOD-9604/exa.txt'] },
-  { id: 'bpc157-10', name: 'BPC-157 10 mg', category: 'LÄKNING', priceSek: 599, inStock: true, sources: ['_wikitides/bpc-157.txt', 'BPC-157/exa.txt'] },
-  { id: 'tb500-10', name: 'TB-500 10 mg', category: 'LÄKNING', priceSek: 899, inStock: true, sources: ['_wikitides/tb-500.txt', 'TB-500/exa.txt'] },
-  { id: 'kpv-10', name: 'KPV 10 mg', category: 'LÄKNING', priceSek: 699, inStock: true, sources: ['_wikitides/kpv.txt', 'KPV_peptide/exa.txt'] },
-  { id: 'pro-healing-20', name: 'BPC-157 + TB-500 (PRO Healing Blend) 20 mg', category: 'LÄKNING', priceSek: 1099, inStock: true, sources: ['_wikitides/bpc-10mg-tb10mg.txt'] },
-  { id: 'thymosin-a1-5', name: 'Thymosin Alpha-1 5 mg', category: 'LÄKNING', priceSek: 599, inStock: true, sources: ['_wikitides/thymosin-alpha-1.txt', 'Thymosin_Alpha-1/exa.txt'] },
-  { id: 'ara290-10', name: 'ARA-290 10 mg', category: 'LÄKNING', priceSek: 649, inStock: true, sources: ['_wikitides/ara-290.txt', 'ARA-290/exa.txt'] },
-  { id: 'glow-70', name: 'GLOW — BPC-157 + TB-500 + GHK-Cu 70 mg', category: 'ANTI-AGING GLOW', priceSek: 1749, inStock: true, sources: ['_wikitides/glowbpc-157-10mg-ghk-cu50mg-tb500-10mg.txt'] },
-  { id: 'gkp-70', name: 'GKP — GHK-Cu + KPV + BPC-157 70 mg', category: 'ANTI-AGING GLOW', priceSek: 1549, inStock: true, sources: ['_wikitides/ghk-cu.txt'] },
-  { id: 'klow2-80', name: 'KLOW 2.0 — BPC-157 + TB-500 + GHK-Cu + KPV 80 mg', category: 'ANTI-AGING GLOW', priceSek: 2179, inStock: true, sources: ['_wikitides/klow.txt'] },
-  { id: 'ghkcu-100', name: 'GHK-Cu 100 mg', category: 'ANTI-AGING GLOW', priceSek: 899, inStock: true, sources: ['_wikitides/ghk-cu-injectable.txt', 'GHK-Cu/exa.txt'] },
-  { id: 'epitalon-50', name: 'Epitalon 50 mg', category: 'ANTI-AGING GLOW', priceSek: 1499, inStock: true, sources: ['_wikitides/epitalon.txt', 'Epitalon/exa.txt'] },
-  { id: 'nad-500', name: 'NAD+ 500 mg', category: 'ANTI-AGING GLOW', priceSek: 899, inStock: true, sources: ['_wikitides/nad-nr.txt', 'NAD__injection/exa.txt'] },
-  { id: 'melanotan2-10', name: 'Melanotan II 10 mg', category: 'ANTI-AGING GLOW', priceSek: 499, inStock: true, sources: ['_wikitides/melanotan-ii.txt', 'Melanotan_II/exa.txt'] },
-  { id: 'pinealon-10', name: 'Pinealon 10 mg', category: 'ANTI-AGING GLOW', priceSek: 599, inStock: true, sources: ['_wikitides/pinealon.txt', 'Pinealon/exa.txt'] },
-  { id: 'igf1lr3-1', name: 'IGF-1 LR3 1 mg', category: 'ANTI-AGING GLOW', priceSek: 999, inStock: true, sources: ['_wikitides/igf-1-lr3.txt', 'IGF-1_LR3/exa.txt'] },
-  { id: 'semax-30', name: 'Semax 30 mg', category: 'MENTAL HÄLSA', priceSek: 1149, inStock: true, sources: ['_wikitides/semax.txt', 'Semax/exa.txt'] },
-  { id: 'na-semax-amidate-30', name: 'NA Semax Amidate 30 mg', category: 'MENTAL HÄLSA', priceSek: 1249, inStock: true, sources: ['NA_Semax_Amidate/exa.txt', '_wikitides/semax.txt'] },
-  { id: 'selank-10', name: 'Selank 10 mg', category: 'MENTAL HÄLSA', priceSek: 449, inStock: true, sources: ['_wikitides/selank.txt', 'Selank/exa.txt'] },
-  { id: 'dsip-15', name: 'DSIP 15 mg', category: 'MENTAL HÄLSA', priceSek: 599, inStock: true, sources: ['_wikitides/dsip.txt', 'DSIP_peptide/exa.txt'] },
-  { id: 'vip-10', name: 'VIP 10 mg', category: 'MENTAL HÄLSA', priceSek: 799, inStock: true, sources: ['VIP_peptide/exa.txt'] },
-  { id: 'kisspeptin-10', name: 'KissPeptin-10 10 mg', category: 'MENTAL HÄLSA', priceSek: 649, inStock: true, sources: ['_wikitides/kisspetin-10.txt', 'Kisspeptin-10/exa.txt'] },
-  { id: 'oxytocin-10', name: 'Oxytocin 10 mg', category: 'MENTAL HÄLSA', priceSek: 699, inStock: true, sources: ['_wikitides/oxytocin-acetate.txt', 'Oxytocin_nasal/exa.txt'] },
-  { id: 'pe2228-10', name: 'PE-22-28 10 mg', category: 'MENTAL HÄLSA', priceSek: 599, inStock: true, sources: ['_wikitides/pe-22-28.txt', 'PE-22-28/exa.txt'] },
-  { id: 'motsc-10', name: 'MOTS-c 10 mg', category: 'PRESTANDA', priceSek: 799, inStock: true, sources: ['_wikitides/mots-c.txt', 'MOTS-c/exa.txt'] },
-  { id: 'ss31-50', name: 'SS-31 50 mg', category: 'PRESTANDA', priceSek: 1999, inStock: true, sources: ['_wikitides/ss-31.txt', 'SS-31_elamipretide/exa.txt'] },
-  { id: 'cjc-ipam-10', name: 'CJC-1295 + Ipamorelin 10 mg', category: 'PRESTANDA', priceSek: 849, inStock: true, sources: ['_wikitides/cjc-1295without-dac5mg-ipa-5mg.txt', 'CJC-1295_Ipamorelin/exa.txt'] },
-  { id: 'ipamorelin-10', name: 'Ipamorelin 10 mg', category: 'PRESTANDA', priceSek: 649, inStock: true, sources: ['_wikitides/ipamorelin.txt', 'Ipamorelin/exa.txt'] },
-  { id: 'cjc-nodac-2', name: 'CJC-1295 (no DAC) 2 mg', category: 'PRESTANDA', priceSek: 379, inStock: true, sources: ['_wikitides/cjc-1295without-dac.txt'] },
-  { id: 'cjc-nodac-5', name: 'CJC-1295 (no DAC) 5 mg', category: 'PRESTANDA', priceSek: 599, inStock: true, sources: ['_wikitides/cjc-1295without-dac.txt', 'CJC-1295_no_DAC/exa.txt'] },
-  { id: 'tesamorelin-10', name: 'Tesamorelin 10 mg', category: 'PRESTANDA', priceSek: 1149, inStock: true, sources: ['_wikitides/tesamorelin.txt', 'Tesamorelin/exa.txt'] },
-  { id: 'pt141-10', name: 'PT-141 10 mg', category: 'PRESTANDA', priceSek: 499, inStock: true, sources: ['_wikitides/pt-141.txt', 'PT-141/exa.txt'] },
-  { id: 'll37-5', name: 'LL-37 5 mg', category: 'PRESTANDA', priceSek: 749, inStock: true, sources: ['_wikitides/ll-37.txt', 'LL-37_peptide/exa.txt'] }
-];
 const CATALOG_BY_ID = new Map(PEPTIDE_CATALOG.map(p => [p.id, p]));
 
-// Skrapade sidor som blev blockerade (429, captcha) innehåller ingen användbar data
-const JUNK_MARKERS = ['Security Checkpoint', 'Too Many Requests', 'error 429'];
-
-function readSource(relPath, maxChars) {
-  try {
-    let text = fs.readFileSync(path.join(DATA_DIR, relPath), 'utf-8').replace(/^﻿/, '');
-    if (JUNK_MARKERS.some(m => text.includes(m))) return '';
-    const contentStart = text.indexOf('Markdown Content:');
-    if (contentStart !== -1) text = text.slice(contentStart + 'Markdown Content:'.length);
-    return text.replace(/\n{3,}/g, '\n\n').trim().slice(0, maxChars);
-  } catch {
-    return '';
-  }
-}
-
-// Bygg kunskapsbasen en gång vid start i stället för att läsa 30 MB vid varje förfrågan
-function buildKnowledgeBase() {
-  return PEPTIDE_CATALOG.map(p => {
-    const text = p.sources
-      .map((src, i) => readSource(src, i === 0 ? 2500 : 1200))
-      .filter(Boolean)
-      .join('\n\n');
-    if (!text) console.warn(`⚠️  Ingen data hittades för ${p.name}`);
-    return `### ${p.id} — ${p.name}\n${text || '(ingen lokal data)'}`;
-  }).join('\n\n');
-}
-
-const KNOWLEDGE_BASE = buildKnowledgeBase();
-console.log(`📚 Kunskapsbas laddad (${Math.round(KNOWLEDGE_BASE.length / 1000)} k tecken, ${PEPTIDE_CATALOG.length} produkter)`);
+const { text: KNOWLEDGE_BASE, source: KB_SOURCE } = loadKnowledgeBase();
+console.log(`📚 Kunskapsbas laddad från ${KB_SOURCE} (${Math.round(KNOWLEDGE_BASE.length / 1000)} k tecken, ${PEPTIDE_CATALOG.length} produkter)`);
 
 const CATALOG_FOR_PROMPT = PEPTIDE_CATALOG.map(({ id, name, category, priceSek, inStock }) => ({ id, name, category, priceSek, inStock }));
 
@@ -201,17 +134,42 @@ function enrichWithCatalog(option) {
   };
 }
 
-// Enkel skydd mot att någon bränner API-krediter: max N förfrågningar per IP och minut
+// Skydd mot att någon bränner API-krediter: max N förfrågningar per IP och minut
 const RATE_LIMIT = 8;
 const rateLimitHits = new Map();
+
+// Ett tak per dygn också, så en öppen sida inte kan kosta hur mycket som helst
+const MAX_DAILY_REQUESTS = Number(process.env.MAX_DAILY_REQUESTS) || 300;
+let dailyCount = 0;
+let dailyResetAt = Date.now() + 86_400_000;
+
 function rateLimit(req, res, next) {
   const now = Date.now();
+
+  if (now > dailyResetAt) {
+    dailyCount = 0;
+    dailyResetAt = now + 86_400_000;
+  }
+  if (dailyCount >= MAX_DAILY_REQUESTS) {
+    console.warn('⛔ [SERVER] Dagsgränsen nådd — fler förfrågningar avvisas tills den nollställs.');
+    return res.status(429).json({ error: 'Tjänsten är hårt belastad just nu. Försök igen senare.' });
+  }
+
   const hits = (rateLimitHits.get(req.ip) || []).filter(t => now - t < 60_000);
   if (hits.length >= RATE_LIMIT) {
     return res.status(429).json({ error: 'För många förfrågningar. Vänta en minut och försök igen.' });
   }
   hits.push(now);
   rateLimitHits.set(req.ip, hits);
+
+  // Städa bort gamla IP-poster så minnet inte växer i onödan
+  if (rateLimitHits.size > 5000) {
+    for (const [ip, times] of rateLimitHits) {
+      if (times.every(t => now - t > 60_000)) rateLimitHits.delete(ip);
+    }
+  }
+
+  dailyCount++;
   next();
 }
 

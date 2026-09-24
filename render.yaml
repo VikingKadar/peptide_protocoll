@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: orvexis-protocol-engine
+    runtime: node
+    plan: free
+    region: frankfurt
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false # sätts manuellt i Render — ska aldrig ligga i koden
+      - key: GEMINI_MODEL
+        value: gemini-3.5-flash
+      - key: MAX_DAILY_REQUESTS
+        value: 300

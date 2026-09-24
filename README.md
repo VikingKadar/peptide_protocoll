@@ -45,6 +45,23 @@ loggas en varning per produkt, och svaren blir betydligt sämre.
 5. Användaren kan spara protokollet till Anteckningar (delningsmenyn på iPhone) eller
    ladda ner injektionsschemat som en `.ics`-fil med påminnelser.
 
+## Lägga upp den live (Render)
+
+1. Kör `npm run build:kb` lokalt och committa `knowledge-base.json`. Den ersätter
+   `peptider/` på servern, eftersom datamappen inte följer med i git.
+2. Skapa konto på render.com, välj **New → Web Service** och koppla detta repo.
+   `render.yaml` fyller i bygg- och startkommandon automatiskt.
+3. Lägg in `GEMINI_API_KEY` under **Environment** i Render. Nyckeln ska aldrig i koden.
+4. Deploy. Appen svarar på adressen Render ger dig, t.ex. `orvexis-protocol-engine.onrender.com`.
+
+Frontend anropar samma adress som den serveras från, så ingen URL behöver ändras.
+Gratisplanen somnar efter en kvarts inaktivitet — första besöket efter det tar ca en minut.
+
+### Kostnadsskydd
+
+Varje anrop till `/api/protocol` kostar pengar hos Google. Servern släpper därför igenom
+högst 8 förfrågningar per IP och minut, och `MAX_DAILY_REQUESTS` (standard 300) per dygn.
+
 ## Viktigt
 
 Appen genererar inte medicinsk rådgivning. Innehållet bygger på forskningsdata och

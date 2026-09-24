@@ -1,11 +1,12 @@
 {
   "name": "peptide_protocoll",
   "version": "1.0.0",
-  "description": "",
+  "description": "AI-driven peptidprotokollmotor för Orvexis",
   "main": "server.js",
   "scripts": {
-    "models": "node list-models.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "build:kb": "node build-kb.js",
+    "models": "node list-models.js"
   },
   "repository": {
     "type": "git",
@@ -23,5 +24,8 @@
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }
