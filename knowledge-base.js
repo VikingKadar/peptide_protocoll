@@ -1,6 +1,9 @@
-const fs = require('fs');
-const path = require('path');
-const { PEPTIDE_CATALOG } = require('./catalog');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+import { PEPTIDE_CATALOG } from './catalog.js';
 
 const DATA_DIR = path.join(__dirname, 'peptider');
 const CACHE_FILE = path.join(__dirname, 'knowledge-base.json');
@@ -48,4 +51,4 @@ function loadKnowledgeBase() {
   throw new Error('Hittar varken peptider/ eller knowledge-base.json — kör "npm run build:kb" lokalt först.');
 }
 
-module.exports = { buildFromDataDir, loadKnowledgeBase, CACHE_FILE, DATA_DIR };
+export { buildFromDataDir, loadKnowledgeBase, CACHE_FILE, DATA_DIR };

@@ -1,4 +1,4 @@
-require('dotenv').config();
+import 'dotenv/config';
 
 async function checkModels() {
   const key = process.env.GEMINI_API_KEY?.trim();

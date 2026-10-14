@@ -41,4 +41,4 @@ const PEPTIDE_CATALOG = [
   { id: 'll37-5', name: 'LL-37 5 mg', category: 'PRESTANDA', priceSek: 749, inStock: true, sources: ['_wikitides/ll-37.txt', 'LL-37_peptide/exa.txt'] }
 ];
 
-module.exports = { PEPTIDE_CATALOG };
+export { PEPTIDE_CATALOG };

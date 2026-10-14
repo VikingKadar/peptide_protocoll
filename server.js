@@ -1,9 +1,12 @@
-const express = require('express');
-const cors = require('cors');
-const path = require('path');
-require('dotenv').config();
-const { PEPTIDE_CATALOG } = require('./catalog');
-const { loadKnowledgeBase } = require('./knowledge-base');
+import express from 'express';
+import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+import 'dotenv/config';
+import { PEPTIDE_CATALOG } from './catalog.js';
+import { loadKnowledgeBase } from './knowledge-base.js';
 
 const PORT = Number(process.env.PORT) || 3000;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY?.trim();

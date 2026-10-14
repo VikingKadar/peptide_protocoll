@@ -3,8 +3,8 @@
  * Filen följer med till servern i drift, där peptider/ inte finns.
  * Kör detta lokalt när du uppdaterat den skrapade datan: npm run build:kb
  */
-const fs = require('fs');
-const { buildFromDataDir, CACHE_FILE, DATA_DIR } = require('./knowledge-base');
+import fs from 'fs';
+import { buildFromDataDir, CACHE_FILE, DATA_DIR } from './knowledge-base.js';
 
 if (!fs.existsSync(DATA_DIR)) {
   console.error('❌ Hittar inte peptider/ — kör skriptet på datorn där den skrapade datan ligger.');
