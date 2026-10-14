@@ -1,0 +1,1266 @@
+[
+  {
+    "id": "retatrutide-10",
+    "name": "Retatrutide",
+    "category": "weight",
+    "tags": [
+      "glpClass"
+    ],
+    "tagsVerified": false,
+    "vialMg": 10,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "Retatrutide 10 mg"
+  },
+  {
+    "id": "tirzepatide-20",
+    "name": "Tirzepatide",
+    "category": "weight",
+    "tags": [
+      "glpClass"
+    ],
+    "tagsVerified": false,
+    "vialMg": 20,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "Tirzepatide 20 mg"
+  },
+  {
+    "id": "semaglutide-10",
+    "name": "Semaglutide",
+    "category": "weight",
+    "tags": [
+      "glpClass"
+    ],
+    "tagsVerified": false,
+    "vialMg": 10,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "Semaglutide 10 mg"
+  },
+  {
+    "id": "cagrilintide-10",
+    "name": "Cagrilintide",
+    "category": "weight",
+    "tags": [
+      "glpClass"
+    ],
+    "tagsVerified": false,
+    "vialMg": 10,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "Cagrilintide 10 mg"
+  },
+  {
+    "id": "5amino1mq-10",
+    "name": "5-Amino-1MQ",
+    "category": "weight",
+    "tags": [],
+    "tagsVerified": false,
+    "vialMg": 10,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "5-Amino-1MQ 10 mg"
+  },
+  {
+    "id": "aod9604-10",
+    "name": "AOD-9604",
+    "category": "weight",
+    "tags": [],
+    "tagsVerified": false,
+    "vialMg": 10,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "AOD-9604 10 mg"
+  },
+  {
+    "id": "bpc157-10",
+    "name": "BPC-157",
+    "category": "healing",
+    "tags": [
+      "growthPromoting"
+    ],
+    "tagsVerified": false,
+    "vialMg": 10,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [
+      {
+        "id": "standard-6w",
+        "name": "Standard healing protocol",
+        "tier": "starter",
+        "phases": [
+          {
+            "name": "Daily healing",
+            "weeks": 6,
+            "doseMcg": 500,
+            "frequency": "daily"
+          }
+        ],
+        "breakAfterWeeks": 6,
+        "rationale": "Tendon and ligament tissue heals slowly because blood supply is limited, so the dose runs daily across the whole cycle."
+      }
+    ],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": "Store the sealed vial in the fridge, away from light.",
+      "afterMixing": "Keep refrigerated at 2–8 °C. Do not freeze or shake."
+    },
+    "contraindications": [
+      "Active cancer or a history of cancer",
+      "Pregnancy or breastfeeding"
+    ],
+    "sideEffects": {
+      "common": [
+        "Irritation or bruising at the injection site"
+      ],
+      "rare": [
+        "Mild nausea"
+      ],
+      "stopAndSeekCare": [
+        "Signs of an allergic reaction: rash, swelling, trouble breathing"
+      ]
+    },
+    "interactions": [],
+    "reportedOutcomes": [
+      {
+        "timeframe": "Week 1–2",
+        "text": "Less pain and easier movement reported in animal tendon studies.",
+        "sourceId": "s1"
+      },
+      {
+        "timeframe": "Week 4–6",
+        "text": "Tissue repair reported over a typical 4–6 week cycle.",
+        "sourceId": "s2"
+      }
+    ],
+    "evidenceGrade": "C",
+    "sources": [
+      {
+        "id": "s1",
+        "title": "BPC157 drives angiogenesis through FBXO22-dependent stabilization of BACH1",
+        "year": 2026,
+        "url": "https://link.springer.com/article/10.1186/s12964-026-02694-6",
+        "type": "in vitro"
+      },
+      {
+        "id": "s2",
+        "title": "BPC-157 profile (WikiTides)",
+        "year": 2026,
+        "url": "https://www.wikitides.com/peptides/bpc-157",
+        "type": "anecdotal"
+      }
+    ],
+    "verified": false,
+    "legacyNameSv": "BPC-157 10 mg",
+    "ownerNote": "TEMPLATE — scaffolded from your scraped data, NOT verified. Check every number against a source, fill priceUsd and reconstitutedStableDays, confirm tags, then set tagsVerified and verified to true."
+  },
+  {
+    "id": "tb500-10",
+    "name": "TB-500",
+    "category": "healing",
+    "tags": [
+      "growthPromoting"
+    ],
+    "tagsVerified": false,
+    "vialMg": 10,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "TB-500 10 mg"
+  },
+  {
+    "id": "kpv-10",
+    "name": "KPV",
+    "category": "healing",
+    "tags": [],
+    "tagsVerified": false,
+    "vialMg": 10,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "KPV 10 mg"
+  },
+  {
+    "id": "pro-healing-20",
+    "name": "BPC-157 + TB-500 (PRO Healing Blend)",
+    "category": "healing",
+    "tags": [
+      "growthPromoting"
+    ],
+    "tagsVerified": false,
+    "vialMg": 20,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "BPC-157 + TB-500 (PRO Healing Blend) 20 mg"
+  },
+  {
+    "id": "thymosin-a1-5",
+    "name": "Thymosin Alpha-1",
+    "category": "healing",
+    "tags": [],
+    "tagsVerified": false,
+    "vialMg": 5,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "Thymosin Alpha-1 5 mg"
+  },
+  {
+    "id": "ara290-10",
+    "name": "ARA-290",
+    "category": "healing",
+    "tags": [],
+    "tagsVerified": false,
+    "vialMg": 10,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "ARA-290 10 mg"
+  },
+  {
+    "id": "glow-70",
+    "name": "GLOW",
+    "category": "skin",
+    "tags": [
+      "growthPromoting"
+    ],
+    "tagsVerified": false,
+    "vialMg": 70,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "GLOW — BPC-157 + TB-500 + GHK-Cu 70 mg"
+  },
+  {
+    "id": "gkp-70",
+    "name": "GKP",
+    "category": "skin",
+    "tags": [
+      "growthPromoting"
+    ],
+    "tagsVerified": false,
+    "vialMg": 70,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "GKP — GHK-Cu + KPV + BPC-157 70 mg"
+  },
+  {
+    "id": "klow2-80",
+    "name": "KLOW 2.0",
+    "category": "skin",
+    "tags": [
+      "growthPromoting"
+    ],
+    "tagsVerified": false,
+    "vialMg": 80,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "KLOW 2.0 — BPC-157 + TB-500 + GHK-Cu + KPV 80 mg"
+  },
+  {
+    "id": "ghkcu-100",
+    "name": "GHK-Cu",
+    "category": "skin",
+    "tags": [
+      "growthPromoting"
+    ],
+    "tagsVerified": false,
+    "vialMg": 100,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "GHK-Cu 100 mg"
+  },
+  {
+    "id": "epitalon-50",
+    "name": "Epitalon",
+    "category": "skin",
+    "tags": [],
+    "tagsVerified": false,
+    "vialMg": 50,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "Epitalon 50 mg"
+  },
+  {
+    "id": "nad-500",
+    "name": "NAD+",
+    "category": "skin",
+    "tags": [],
+    "tagsVerified": false,
+    "vialMg": 500,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "NAD+ 500 mg"
+  },
+  {
+    "id": "melanotan2-10",
+    "name": "Melanotan II",
+    "category": "skin",
+    "tags": [],
+    "tagsVerified": false,
+    "vialMg": 10,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "Melanotan II 10 mg"
+  },
+  {
+    "id": "pinealon-10",
+    "name": "Pinealon",
+    "category": "skin",
+    "tags": [],
+    "tagsVerified": false,
+    "vialMg": 10,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "Pinealon 10 mg"
+  },
+  {
+    "id": "igf1lr3-1",
+    "name": "IGF-1 LR3",
+    "category": "skin",
+    "tags": [
+      "growthPromoting"
+    ],
+    "tagsVerified": false,
+    "vialMg": 1,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "IGF-1 LR3 1 mg"
+  },
+  {
+    "id": "semax-30",
+    "name": "Semax",
+    "category": "cognition",
+    "tags": [],
+    "tagsVerified": false,
+    "vialMg": 30,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "Semax 30 mg"
+  },
+  {
+    "id": "na-semax-amidate-30",
+    "name": "NA Semax Amidate",
+    "category": "cognition",
+    "tags": [],
+    "tagsVerified": false,
+    "vialMg": 30,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "NA Semax Amidate 30 mg"
+  },
+  {
+    "id": "selank-10",
+    "name": "Selank",
+    "category": "cognition",
+    "tags": [],
+    "tagsVerified": false,
+    "vialMg": 10,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "Selank 10 mg"
+  },
+  {
+    "id": "dsip-15",
+    "name": "DSIP",
+    "category": "cognition",
+    "tags": [],
+    "tagsVerified": false,
+    "vialMg": 15,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "DSIP 15 mg"
+  },
+  {
+    "id": "vip-10",
+    "name": "VIP",
+    "category": "cognition",
+    "tags": [],
+    "tagsVerified": false,
+    "vialMg": 10,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "VIP 10 mg"
+  },
+  {
+    "id": "kisspeptin-10",
+    "name": "KissPeptin-10",
+    "category": "cognition",
+    "tags": [],
+    "tagsVerified": false,
+    "vialMg": 10,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "KissPeptin-10 10 mg"
+  },
+  {
+    "id": "oxytocin-10",
+    "name": "Oxytocin",
+    "category": "cognition",
+    "tags": [],
+    "tagsVerified": false,
+    "vialMg": 10,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "Oxytocin 10 mg"
+  },
+  {
+    "id": "pe2228-10",
+    "name": "PE-22-28",
+    "category": "cognition",
+    "tags": [],
+    "tagsVerified": false,
+    "vialMg": 10,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "PE-22-28 10 mg"
+  },
+  {
+    "id": "motsc-10",
+    "name": "MOTS-c",
+    "category": "performance",
+    "tags": [],
+    "tagsVerified": false,
+    "vialMg": 10,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "MOTS-c 10 mg"
+  },
+  {
+    "id": "ss31-50",
+    "name": "SS-31",
+    "category": "performance",
+    "tags": [],
+    "tagsVerified": false,
+    "vialMg": 50,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "SS-31 50 mg"
+  },
+  {
+    "id": "cjc-ipam-10",
+    "name": "CJC-1295 + Ipamorelin",
+    "category": "performance",
+    "tags": [
+      "growthPromoting"
+    ],
+    "tagsVerified": false,
+    "vialMg": 10,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "CJC-1295 + Ipamorelin 10 mg"
+  },
+  {
+    "id": "ipamorelin-10",
+    "name": "Ipamorelin",
+    "category": "performance",
+    "tags": [
+      "growthPromoting"
+    ],
+    "tagsVerified": false,
+    "vialMg": 10,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "Ipamorelin 10 mg"
+  },
+  {
+    "id": "cjc-nodac-2",
+    "name": "CJC-1295 (no DAC)",
+    "category": "performance",
+    "tags": [
+      "growthPromoting"
+    ],
+    "tagsVerified": false,
+    "vialMg": 2,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "CJC-1295 (no DAC) 2 mg"
+  },
+  {
+    "id": "cjc-nodac-5",
+    "name": "CJC-1295 (no DAC)",
+    "category": "performance",
+    "tags": [
+      "growthPromoting"
+    ],
+    "tagsVerified": false,
+    "vialMg": 5,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "CJC-1295 (no DAC) 5 mg"
+  },
+  {
+    "id": "tesamorelin-10",
+    "name": "Tesamorelin",
+    "category": "performance",
+    "tags": [
+      "growthPromoting"
+    ],
+    "tagsVerified": false,
+    "vialMg": 10,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "Tesamorelin 10 mg"
+  },
+  {
+    "id": "pt141-10",
+    "name": "PT-141",
+    "category": "performance",
+    "tags": [],
+    "tagsVerified": false,
+    "vialMg": 10,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "PT-141 10 mg"
+  },
+  {
+    "id": "ll37-5",
+    "name": "LL-37",
+    "category": "performance",
+    "tags": [],
+    "tagsVerified": false,
+    "vialMg": 5,
+    "vialCapacityMl": 3,
+    "components": [],
+    "priceUsd": null,
+    "inStock": true,
+    "productUrl": null,
+    "protocols": [],
+    "reconstitutedStableDays": null,
+    "storage": {
+      "beforeMixing": null,
+      "afterMixing": null
+    },
+    "contraindications": [],
+    "sideEffects": {
+      "common": [],
+      "rare": [],
+      "stopAndSeekCare": []
+    },
+    "interactions": [],
+    "reportedOutcomes": [],
+    "evidenceGrade": null,
+    "sources": [],
+    "verified": false,
+    "legacyNameSv": "LL-37 5 mg"
+  }
+]

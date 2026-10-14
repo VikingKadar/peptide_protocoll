@@ -7,7 +7,8 @@
     "start": "node server.js",
     "test": "node --test",
     "build:kb": "node build-kb.js",
-    "models": "node list-models.js"
+    "models": "node list-models.js",
+    "validate": "node validate-db.js"
   },
   "repository": {
     "type": "git",

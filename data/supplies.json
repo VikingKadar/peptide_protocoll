@@ -1,0 +1,18 @@
+{
+  "bacWater": {
+    "name": "Bacteriostatic water 30 ml",
+    "vialMl": 30,
+    "priceUsd": null,
+    "productUrl": null
+  },
+  "syringe": {
+    "name": "U-100 insulin syringe",
+    "priceUsd": null,
+    "productUrl": null
+  },
+  "swab": {
+    "name": "Alcohol swab",
+    "priceUsd": null,
+    "productUrl": null
+  }
+}
