@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { evaluateSafety, computeBmi, filterCatalog, mentionsWeight, MIN_AGE } from './safety.js';
+import { evaluateSafety, computeBmi, filterCatalog, filterCatalogForGoal, isWeightGoal, MIN_AGE } from './safety.js';
 
 const CATALOG = [
   { id: 'sema', category: 'weight', tags: ['glpClass'], verified: true, inStock: true },
@@ -10,7 +10,10 @@ const CATALOG = [
   { id: 'unverified', category: 'sleep', tags: [], verified: false, inStock: true },
   { id: 'oos', category: 'sleep', tags: [], verified: true, inStock: false },
 ];
-const allow = (profile, goals = [], cfg) => filterCatalog(CATALOG, evaluateSafety(profile, goals, cfg)).map((p) => p.id);
+const allow = (profile, goals = [], cfg) => {
+  const s = evaluateSafety(profile, goals, cfg);
+  return filterCatalogForGoal(CATALOG, s, 'g1').map((p) => p.id);
+};
 
 // ---------- BMI ----------
 
@@ -57,24 +60,24 @@ test('BMI between 27 and 30 is allowed but flagged', () => {
   const r = evaluateSafety(profile, ['lose weight']);
   assert.equal(r.bmi, 27);
   assert.deepEqual(r.excludedTags, []);
-  assert.equal(r.flags.filter((f) => f.severity === 'caution').length, 1);
+  const caution = r.flags.find((f) => f.severity === 'caution');
+  assert.equal(caution.goalId, 'g1');
 });
 
-test('unknown BMI excludes the class by default, and says how to fix it', () => {
-  const r = evaluateSafety({ age: 30 }, ['lose weight']);
-  assert.ok(r.excludedTags.includes('glpClass'));
-  assert.match(r.flags[0].message, /height and weight/);
-  assert.ok(!allow({ age: 30 }, ['lose weight']).includes('sema'));
+test('unknown BMI allows the class by default — no BMI check happens at all', () => {
+  assert.ok(allow({ age: 30 }, ['lose weight']).includes('sema'));
 });
 
-test('unknown BMI can be configured to allow instead', () => {
-  const r = evaluateSafety({ age: 30 }, [], { onUnknownBmi: 'allow' });
-  assert.deepEqual(r.excludedTags, []);
+test('unknown BMI can be configured to exclude instead', () => {
+  const ids = allow({ age: 30 }, ['lose weight'], { onUnknownBmi: 'exclude' });
+  assert.ok(!ids.includes('sema'));
 });
 
-test('cancer history removes growth-promoting products (§15.1 case 9)', () => {
+test('cancer history removes growth-promoting products from every goal (§15.1 case 9)', () => {
   const profile = { age: 50, health: { cancerHistory: true } };
-  assert.ok(!allow(profile, ['heal my tendon']).includes('bpc'));
+  const s = evaluateSafety(profile, ['heal my tendon', 'sleep better']);
+  assert.ok(s.excludedTags.includes('growthPromoting'));
+  for (const id of ['g1', 'g2']) assert.ok(!filterCatalogForGoal(CATALOG, s, id).map((p) => p.id).includes('bpc'));
 });
 
 test('MTC/MEN2 and pancreatitis each remove the GLP-1 class', () => {
@@ -83,13 +86,13 @@ test('MTC/MEN2 and pancreatitis each remove the GLP-1 class', () => {
   assert.ok(!allow({ ...bmi, health: { pancreatitisHistory: true } }).includes('reta'));
 });
 
-test('eating-disorder history removes all weight products and offers support', () => {
+test('eating-disorder history removes weight products from a weight goal', () => {
   const profile = { age: 25, weightValue: 100, weightUnit: 'kg', heightValue: 170, heightUnit: 'cm', health: { eatingDisorderHistory: true } };
   const r = evaluateSafety(profile, ['I want to lose 10 kg']);
-  assert.equal(r.blocked, null); // other goals still work
+  assert.equal(r.blocked, null);
   assert.deepEqual(allow(profile, ['I want to lose 10 kg']), ['bpc', 'dsip']);
   const stop = r.flags.find((f) => f.severity === 'stop');
-  assert.match(stop.message, /eating disorder/);
+  assert.equal(stop.goalId, 'g1');
   assert.ok(stop.links[0].url);
 });
 
@@ -101,10 +104,17 @@ test('the support wording follows the region', () => {
   assert.match(se.flags[0].links[0].label, /Frisk & Fri/);
 });
 
-test('exclusions apply even when no goal mentions weight', () => {
-  // The gate is person-level: a weight product must not slip in via a combined plan
+test('weight gates are scoped to the goal, so other goals keep the full catalog', () => {
   const profile = { age: 25, health: { eatingDisorderHistory: true } };
-  assert.deepEqual(allow(profile, ['sleep better']), ['bpc', 'dsip']);
+  const s = evaluateSafety(profile, ['sleep better', 'lose 10 kg']);
+  assert.deepEqual(filterCatalogForGoal(CATALOG, s, 'g1').map((p) => p.id), ['sema', 'reta', 'bpc', 'dsip']);
+  assert.deepEqual(filterCatalogForGoal(CATALOG, s, 'g2').map((p) => p.id), ['bpc', 'dsip']);
+});
+
+test('a weight goal the keyword match misses keeps weight products available', () => {
+  // The known cost of goal-level scoping
+  const profile = { age: 25, weightValue: 60, weightUnit: 'kg', heightValue: 175, heightUnit: 'cm' };
+  assert.ok(allow(profile, ['I want to look leaner for summer']).includes('sema'));
 });
 
 // ---------- Cautions ----------
@@ -116,10 +126,11 @@ test('insulin or a sulfonylurea is a caution, not an exclusion', () => {
   assert.ok(r.flags.some((f) => f.severity === 'caution' && /low blood sugar/.test(f.message)));
 });
 
-test('a skipped profile still works, just more restricted', () => {
+test('a skipped profile excludes nothing — no age, BMI or health answers to gate on', () => {
   const r = evaluateSafety({}, ['heal my tendon']);
   assert.equal(r.blocked, null);
-  assert.deepEqual(allow({}, ['heal my tendon']), ['bpc', 'dsip']);
+  assert.deepEqual(r.excludedTags, []);
+  assert.deepEqual(allow({}, ['heal my tendon']), ['sema', 'reta', 'bpc', 'dsip']);
 });
 
 // ---------- Catalog filter ----------
@@ -130,7 +141,7 @@ test('filterCatalog drops unverified and out-of-stock products', () => {
   assert.ok(!ids.includes('oos'));
 });
 
-test('mentionsWeight only affects wording', () => {
-  assert.equal(mentionsWeight(['I want to lose weight']), true);
-  assert.equal(mentionsWeight(['my knee hurts']), false);
+test('isWeightGoal decides whether the weight gates apply', () => {
+  assert.equal(isWeightGoal('I want to lose weight'), true);
+  assert.equal(isWeightGoal('my knee hurts'), false);
 });
