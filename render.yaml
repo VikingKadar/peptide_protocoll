@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: orvexis-protocol-engine
+    name: amida-protocol-engine
     runtime: node
     plan: free
     region: frankfurt

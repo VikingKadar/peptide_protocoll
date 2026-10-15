@@ -1,7 +1,7 @@
 {
-  "name": "peptide_protocoll",
+  "name": "amida",
   "version": "1.0.0",
-  "description": "AI-driven peptidprotokollmotor för Orvexis",
+  "description": "Amida — peptide protocols, calculated",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

@@ -1,68 +1,67 @@
-# Orvexis — Peptid Protocol Engine
+# Amida — Peptide protocols, calculated
 
-Webbapp som tar emot ett hälsomål i fritext och bygger ett peptidprotokoll med dosering,
-faser, spädning, kalenderpåminnelser och totalkostnad. Protokollet genereras av Gemini
-utifrån en lokal forskningsdatabas och Orvexis sortiment.
+Describe a goal, get a research-based peptide protocol with exact mixing, dosing,
+schedule and cost. The model picks and explains; every number is computed in code.
 
-## Kom igång
+## Getting started
 
 ```bash
 npm install
-cp .env.example .env    # fyll i din GEMINI_API_KEY
+cp .env.example .env    # add your GEMINI_API_KEY
 npm start
 ```
 
-Öppna sedan http://localhost:3000
+Then open http://localhost:3000
 
-## Miljövariabler (.env)
+```bash
+npm test        # calc, combine and safety unit tests
+npm run validate # checks the peptide database
+```
 
-| Variabel | Beskrivning |
+## Environment (.env)
+
+| Variable | Description |
 | --- | --- |
-| `GEMINI_API_KEY` | Nyckel från Google AI Studio. Krävs — servern startar inte utan den. |
-| `GEMINI_MODEL` | Modell att använda. Standard: `gemini-3.5-flash`. |
-| `PORT` | Port för servern. Standard: `3000`. |
+| `GEMINI_API_KEY` | Key from Google AI Studio. Required — the server refuses to start without it. |
+| `GEMINI_MODEL` | Model to use. Default: `gemini-3.5-flash`. |
+| `MAX_DAILY_REQUESTS` | Daily cap on protocol requests. Default: 300. |
+| `PORT` | Server port. Default: 3000. |
 
-`.env` är med i `.gitignore` och ska aldrig committas.
-Kör `npm run models` för att lista vilka Gemini-modeller din nyckel har tillgång till.
+`.env` is gitignored and must never be committed.
 
-## Forskningsdatabasen (`peptider/`)
+## How it fits together
 
-Mappen `peptider/` innehåller den skrapade forskningsdatan (en mapp per peptid med
-utdrag från WikiTides, PubMed, Examine och forum). Den ligger **inte** i git — den
-innehåller andras innehåll och personuppgifter, och behöver kopieras in manuellt.
+| File | Role |
+| --- | --- |
+| `index.html` | The whole frontend: one page, inline CSS and JS. |
+| `server.js` | API, rate limiting, the Gemini call and response validation. |
+| `calc.js` | Single-protocol math: concentration, units, schedule, vials, cost. |
+| `combine.js` | Multi-goal math: compatibility, timeline placement, merged schedule. |
+| `safety.js` | Safety gates, applied to the catalog before the model sees it. |
+| `data/` | The peptide database and compatibility table. See `data/README.md`. |
+| `validate-db.js` | Refuses incomplete or contradictory database entries. |
+| `catalog.js`, `knowledge-base.js` | The older catalog and research extracts, still used by the live flow. |
 
-Servern läser mappen en gång vid start och bygger en kunskapsbas av de källor som
-varje produkt i `PEPTIDE_CATALOG` pekar ut via sitt `sources`-fält. Saknas mappen
-loggas en varning per produkt, och svaren blir betydligt sämre.
+Doses, units, vial counts, cost and calendars are never produced by the model.
+It chooses a product and writes the words; the files above compute the numbers.
 
-## Så fungerar det
+## The research database (`peptider/`)
 
-1. Frontend (`index.html`) skickar målet till `POST /api/protocol`.
-2. Servern bygger en prompt av kunskapsbasen + sortimentet och anropar Gemini.
-3. Gemini väljer en produkt via `productId` och föreslår upplägg, faser och schema.
-4. Servern fyller i pris och lagerstatus **från katalogen** — aldrig från AI-svaret —
-   och validerar schemat innan det skickas till webbläsaren.
-5. Användaren kan spara protokollet till Anteckningar (delningsmenyn på iPhone) eller
-   ladda ner injektionsschemat som en `.ics`-fil med påminnelser.
+Holds the scraped research data, one folder per peptide. It is **not** in git — it
+contains other people's content and personal data, so copy it in manually.
 
-## Lägga upp den live (Render)
+The server reads it at startup. Without it, run `npm run build:kb` on a machine that
+has it and commit `knowledge-base.json`, which ships in its place.
 
-1. Kör `npm run build:kb` lokalt och committa `knowledge-base.json`. Den ersätter
-   `peptider/` på servern, eftersom datamappen inte följer med i git.
-2. Skapa konto på render.com, välj **New → Web Service** och koppla detta repo.
-   `render.yaml` fyller i bygg- och startkommandon automatiskt.
-3. Lägg in `GEMINI_API_KEY` under **Environment** i Render. Nyckeln ska aldrig i koden.
-4. Deploy. Appen svarar på adressen Render ger dig, t.ex. `orvexis-protocol-engine.onrender.com`.
+## Deploying (Render)
 
-Frontend anropar samma adress som den serveras från, så ingen URL behöver ändras.
-Gratisplanen somnar efter en kvarts inaktivitet — första besöket efter det tar ca en minut.
+1. Run `npm run build:kb` locally and commit `knowledge-base.json`.
+2. On render.com: **New → Web Service**, connect this repo. `render.yaml` fills in the rest.
+3. Add `GEMINI_API_KEY` under **Environment**.
+4. Deploy. The free plan sleeps after 15 minutes idle; the first visit after that takes about a minute.
 
-### Kostnadsskydd
+## Important
 
-Varje anrop till `/api/protocol` kostar pengar hos Google. Servern släpper därför igenom
-högst 8 förfrågningar per IP och minut, och `MAX_DAILY_REQUESTS` (standard 300) per dygn.
-
-## Viktigt
-
-Appen genererar inte medicinsk rådgivning. Innehållet bygger på forskningsdata och
-användarrapporter, och produkterna säljs för forskningsändamål.
+Amida provides educational information based on published research. It is not medical
+advice. Products are sold for research use. Talk to a licensed clinician before starting
+any compound.

@@ -1,416 +1,399 @@
 <!DOCTYPE html>
-<html lang="sv">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Orvexis — Peptidprotokoll</title>
-  <meta name="description" content="Beskriv ditt mål och få ett forskningsbaserat peptidprotokoll med dosering, spädning och kostnad." />
-  <meta name="theme-color" content="#FBF8F5" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='none' stroke='%23B8704D' stroke-width='3'/><circle cx='16' cy='16' r='5' fill='%23B8704D'/></svg>" />
+  <title>Amida — Peptide protocols, calculated</title>
+  <meta name="description" content="Describe your goal and get a research-based peptide protocol with exact mixing, dosing, schedule and cost." />
+  <meta name="theme-color" content="#F5F2ED" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='8' cy='16' r='4' fill='%2333443A'/><circle cx='24' cy='16' r='4' fill='%2333443A'/><rect x='11' y='15.2' width='10' height='1.6' fill='%2333443A'/></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #FBF8F5;
-      --surface: #FFFFFF;
-      --surface-2: #F5EFEA;
-      --ink: #1F1611;
-      --ink-2: #5C4B3F;
-      --ink-3: #8F7D70;
-      --line: #E9E1DA;
-      --accent: #B8704D;
-      --accent-ink: #9A5A3B;
-      --accent-soft: #F6EAE3;
-      --dark: #1F1611;
-      --warn-bg: #FBF1EE;
-      --warn-line: #EFCFC4;
-      --warn-ink: #8A2E1C;
-      --radius: 16px;
-      --shadow: 0 1px 2px rgba(31, 22, 17, .04), 0 8px 24px rgba(31, 22, 17, .06);
-      --serif: 'Fraunces', Georgia, serif;
-      --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      --bg: #F5F2ED;  --surface: #FCFBF8;  --surface-2: #EFEBE4;
+      --ink: #171614;
+      --ink-2: #56524B;
+      --ink-3: #6F6A62;
+      --line: #E3DED6;  --line-strong: #CFC8BD;
+      --accent: #33443A;
+      --accent-ink: #F5F2ED;  --accent-soft: #E4EAE3;
+      --warn: #9A3B2C;  --warn-soft: #F5E6E1;
+      --caution: #7A5C14;  --caution-soft: #F4EEDC;
+      --radius: 14px; --radius-sm: 10px; --pill: 999px;
+      --shadow: 0 1px 0 rgba(23,22,20,.04), 0 8px 24px -12px rgba(23,22,20,.12);
+      --font-display: "Instrument Serif", Georgia, serif;
+      --font-ui: "Inter", system-ui, sans-serif;
+      --font-num: "JetBrains Mono", ui-monospace, monospace;
     }
 
     *, *::before, *::after { box-sizing: border-box; }
     html { -webkit-text-size-adjust: 100%; }
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--ink);
-      font: 400 16px/1.6 var(--sans);
-      -webkit-font-smoothing: antialiased;
-    }
-    button, textarea { font: inherit; color: inherit; }
-    .container { max-width: 880px; margin: 0 auto; padding: 0 20px; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/26px var(--font-ui); -webkit-font-smoothing: antialiased; }
+    button, textarea, input { font: inherit; color: inherit; }
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+    .narrow { max-width: 720px; margin: 0 auto; }
     .hidden { display: none !important; }
-    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .num { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
+    .label { font: 600 11px/16px var(--font-ui); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+    .small { font-size: 13px; line-height: 20px; }
 
-    /* Navigation */
-    .nav { border-bottom: 1px solid var(--line); background: rgba(251, 248, 245, .85); backdrop-filter: blur(8px); position: sticky; top: 0; z-index: 10; }
-    .nav .container { display: flex; align-items: center; justify-content: space-between; height: 64px; }
-    .brand { display: flex; align-items: center; gap: 10px; font-family: var(--serif); font-weight: 600; font-size: 20px; letter-spacing: -.01em; color: var(--ink); text-decoration: none; }
+    /* Header */
+    header.site { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 20; }
+    header.site .wrap { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); }
+    .wordmark { font-family: var(--font-display); font-size: 28px; letter-spacing: -0.01em; line-height: 1; }
     .brand svg { color: var(--accent); }
-    .nav-tag { font-size: 13px; color: var(--ink-3); }
+    .navlink { background: none; border: 0; padding: 0; font-size: 14px; color: var(--ink-2); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-strong); }
+    .navlink:hover { color: var(--ink); }
 
     /* Hero */
-    .hero { padding: 72px 0 40px; text-align: center; }
-    .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-ink); }
-    .eyebrow::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
-    h1 { font-family: var(--serif); font-weight: 500; font-size: clamp(36px, 6vw, 56px); line-height: 1.08; letter-spacing: -.02em; margin: 16px auto 16px; max-width: 14ch; text-wrap: balance; }
-    .lede { font-size: 18px; color: var(--ink-2); max-width: 52ch; margin: 0 auto; text-wrap: pretty; }
-    .trust { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 24px; margin-top: 28px; font-size: 14px; color: var(--ink-3); }
-    .trust span { display: inline-flex; align-items: center; gap: 6px; }
-    .trust svg { color: var(--accent); flex: none; }
-
-    /* Card */
-    .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+    .hero { padding: 96px 0 48px; text-align: center; }
+    .eyebrow { display: inline-block; font: 600 11px/16px var(--font-ui); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+    h1 { font-family: var(--font-display); font-weight: 400; font-size: 56px; line-height: 60px; letter-spacing: -0.02em; margin: 20px auto 16px; max-width: 16ch; }
+    .lede { font-size: 18px; line-height: 28px; color: var(--ink-2); max-width: 54ch; margin: 0 auto; }
+    .trust { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 28px; margin-top: 32px; }
+    .trust span { font-size: 13px; color: var(--ink-3); }
 
     /* Form */
-    .form-card { padding: 28px; margin-bottom: 48px; }
-    .form-card label { display: block; font-weight: 600; font-size: 15px; margin-bottom: 10px; }
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+    .form-card { padding: 28px; margin-bottom: 64px; }
+    label.field { display: block; font: 600 18px/26px var(--font-ui); margin-bottom: 12px; }
     textarea {
-      width: 100%; min-height: 120px; padding: 16px; resize: vertical;
-      border: 1px solid var(--line); border-radius: 12px; background: var(--bg);
-      font-size: 16px; line-height: 1.5; transition: border-color .15s, box-shadow .15s;
+      width: 100%; min-height: 112px; padding: 16px; resize: vertical;
+      border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--bg);
+      font-size: 16px; line-height: 26px; transition: border-color .15s, box-shadow .15s;
     }
     textarea::placeholder { color: var(--ink-3); }
-    textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); background: var(--surface); }
-    .examples { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-    .examples-label { font-size: 13px; color: var(--ink-3); width: 100%; }
-    .chip {
-      border: 1px solid var(--line); background: var(--surface); border-radius: 999px;
-      padding: 6px 14px; font-size: 13px; color: var(--ink-2); cursor: pointer; transition: all .15s;
-    }
-    .chip:hover { border-color: var(--accent); color: var(--accent-ink); background: var(--accent-soft); }
-    .form-footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 20px; flex-wrap: wrap; }
-    .char-count { font-size: 13px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-      background: var(--dark); color: #fff; border: 0; border-radius: 12px;
-      padding: 14px 24px; font-weight: 600; font-size: 15px; cursor: pointer;
-      transition: background .15s, transform .15s;
-    }
-    .btn:hover { background: #3A2A20; }
+    textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); background: var(--surface); }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .chips .label { width: 100%; margin-bottom: 2px; }
+    .chip { border: 1px solid var(--line-strong); background: transparent; border-radius: var(--pill); padding: 7px 14px; font-size: 13px; color: var(--ink-2); cursor: pointer; transition: all .15s; }
+    .chip:hover { border-color: var(--accent); color: var(--accent); }
+    .chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+    .form-foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 24px; flex-wrap: wrap; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: var(--accent); color: var(--accent-ink); border: 0; border-radius: var(--radius-sm); padding: 14px 24px; font-weight: 600; font-size: 15px; cursor: pointer; transition: opacity .15s, transform .15s; }
+    .btn:hover { opacity: .9; }
     .btn:active { transform: translateY(1px); }
-    .btn:disabled { opacity: .55; cursor: not-allowed; }
-    .btn:focus-visible, .chip:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+    .btn:disabled { opacity: .5; cursor: not-allowed; }
+    .btn-ghost { display: inline-flex; align-items: center; justify-content: center; gap: 8px; flex: 1 1 220px; background: transparent; color: var(--ink); border: 1px solid var(--line-strong); border-radius: var(--radius-sm); padding: 12px 18px; font-weight: 600; font-size: 14px; cursor: pointer; transition: all .15s; }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-ghost:disabled { opacity: .5; cursor: not-allowed; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-    /* Error */
-    .alert { display: flex; gap: 12px; align-items: flex-start; padding: 16px 18px; border-radius: 12px; background: var(--warn-bg); border: 1px solid var(--warn-line); color: var(--warn-ink); font-size: 15px; margin-bottom: 32px; }
-    .alert svg { flex: none; margin-top: 2px; }
+    /* Callouts */
+    .callout { display: flex; gap: 12px; padding: 16px 18px; border-radius: var(--radius-sm); font-size: 15px; margin-bottom: 32px; }
+    .callout.warn { background: var(--warn-soft); color: var(--warn); }
+    .callout.caution { background: var(--caution-soft); color: var(--caution); }
 
     /* Loader */
-    .loader { padding: 40px 28px; margin-bottom: 48px; }
-    .loader-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
-    .loader-steps li { display: flex; align-items: center; gap: 12px; color: var(--ink-3); font-size: 15px; transition: color .3s; }
-    .loader-steps li.active { color: var(--ink); font-weight: 500; }
-    .loader-steps li.done { color: var(--ink-2); }
-    .dot { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--line); flex: none; position: relative; }
+    .loader { padding: 32px 28px; margin-bottom: 64px; }
+    .loader ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+    .loader li { display: flex; align-items: center; gap: 12px; color: var(--ink-3); font-size: 15px; }
+    .loader li.active { color: var(--ink); font-weight: 500; }
+    .loader li.done { color: var(--ink-2); }
+    .dot { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--line-strong); flex: none; position: relative; }
     li.active .dot { border-color: var(--accent); border-top-color: transparent; animation: spin .8s linear infinite; }
     li.done .dot { background: var(--accent); border-color: var(--accent); }
-    li.done .dot::after { content: ''; position: absolute; left: 5px; top: 2px; width: 5px; height: 9px; border: solid #fff; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+    li.done .dot::after { content: ''; position: absolute; left: 4.5px; top: 2px; width: 4px; height: 8px; border: solid var(--accent-ink); border-width: 0 2px 2px 0; transform: rotate(45deg); }
     @keyframes spin { to { transform: rotate(360deg); } }
 
     /* Results */
-    .results { display: grid; gap: 40px; padding-bottom: 24px; animation: fadeUp .4s ease both; }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-    .section-title { font-family: var(--serif); font-weight: 500; font-size: 24px; letter-spacing: -.01em; margin: 0 0 16px; }
+    .results { display: grid; gap: 64px; padding-bottom: 32px; }
+    .results > section { animation: rise .25s ease both; }
+    @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    h2.section { font-family: var(--font-display); font-weight: 400; font-size: 32px; line-height: 36px; margin: 0 0 20px; }
+    h3 { font: 600 18px/26px var(--font-ui); margin: 0 0 12px; }
 
     .top { overflow: hidden; }
     .top-head { padding: 28px 28px 0; }
-    .badge { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--accent-ink); background: var(--accent-soft); padding: 5px 10px; border-radius: 999px; }
-    .meta-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
-    .category { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
-    .stock { font-size: 13px; color: #2F6B45; display: inline-flex; align-items: center; gap: 6px; }
+    .meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+    .stock { font-size: 13px; color: var(--accent); display: inline-flex; align-items: center; gap: 6px; }
     .stock::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
     .stock.out { color: var(--ink-3); }
-    .top h2 { font-family: var(--serif); font-weight: 500; font-size: clamp(28px, 4.5vw, 38px); line-height: 1.15; letter-spacing: -.02em; margin: 0 0 14px; }
-    .pitch { color: var(--ink-2); font-size: 16px; margin: 0; max-width: 65ch; }
+    .evidence { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-2); }
+    .evidence b { width: 20px; height: 20px; border-radius: 50%; border: 1px solid var(--line-strong); display: grid; place-items: center; font: 600 11px/1 var(--font-ui); }
+    .top h2.name { font-family: var(--font-display); font-weight: 400; font-size: 40px; line-height: 44px; letter-spacing: -0.02em; margin: 0 0 12px; }
+    .variant { display: inline-block; font-size: 13px; color: var(--accent); background: var(--accent-soft); border-radius: var(--pill); padding: 5px 12px; margin-bottom: 16px; }
+    .why { color: var(--ink-2); margin: 0; max-width: 62ch; }
 
-    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border-block: 1px solid var(--line); margin-top: 28px; }
+    .exports { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+    .export-note { margin: 10px 0 0; }
+
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-top: 28px; }
     .stat { background: var(--surface); padding: 20px 28px; }
-    .stat-label { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 6px; }
-    .stat-value { font-size: 15px; font-weight: 500; }
+    .stat .value { font-family: var(--font-num); font-size: 28px; line-height: 36px; font-variant-numeric: tabular-nums; margin-top: 4px; }
+    .stat .value.text { font-family: var(--font-ui); font-size: 15px; line-height: 24px; }
 
-    .recon { margin: 24px 28px 0; padding: 20px; border-radius: 12px; background: var(--surface-2); }
-    .recon h3 { margin: 0 0 6px; font-size: 15px; font-weight: 600; }
-    .recon p { margin: 0 0 14px; color: var(--ink-2); font-size: 15px; }
-    .pills { display: flex; flex-wrap: wrap; gap: 8px; }
-    .pill { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; font-size: 14px; color: var(--ink-2); }
-    .pill strong { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+    .pad { padding: 28px; }
+    .timeline { list-style: none; margin: 0 0 20px; padding: 0 0 0 24px; border-left: 2px solid var(--line); display: grid; gap: 18px; }
+    .timeline li { position: relative; }
+    .timeline li::before { content: ''; position: absolute; left: -31px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); border: 2px solid var(--surface); }
+    .phase-name { font-weight: 600; }
+    .phase-name span { font-weight: 400; color: var(--ink-3); }
+    .phase-instruction { margin: 2px 0 0; color: var(--ink-2); }
+    .rationale { background: var(--surface-2); border-radius: var(--radius-sm); padding: 16px 18px; color: var(--ink-2); }
+    .otherp { margin-top: 20px; border-top: 1px solid var(--line); padding-top: 16px; }
+    .otherp ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; color: var(--ink-2); }
 
-    .price-bar { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 24px; padding: 22px 28px; background: var(--dark); color: #fff; }
-    .price-label { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: #D9A588; }
-    .price-detail { font-size: 14px; color: #BFB1A6; font-variant-numeric: tabular-nums; }
-    .price-total { font-family: var(--serif); font-size: 34px; font-weight: 500; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+    /* Syringe */
+    .syringe { width: 100%; height: auto; margin: 16px 0 8px; }
+    .syringe .barrel { fill: var(--surface); stroke: var(--line-strong); }
+    .syringe .fill { fill: var(--accent-soft); }
+    .syringe .tick { stroke: var(--line-strong); }
+    .syringe .tick.major { stroke: var(--ink-3); }
+    .syringe .plunger { fill: var(--accent); }
+    .syringe text { font: 500 7px var(--font-num); fill: var(--ink-3); }
+    .draw-label { font-family: var(--font-num); font-size: 15px; color: var(--ink); }
 
-    /* Export-knappar */
-    .exports { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
-    .btn-secondary {
-      display: inline-flex; align-items: center; justify-content: center; gap: 8px; flex: 1 1 200px;
-      background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 12px;
-      padding: 12px 18px; font-weight: 600; font-size: 14px; cursor: pointer; transition: all .15s;
-    }
-    .btn-secondary:hover { border-color: var(--accent); color: var(--accent-ink); background: var(--accent-soft); }
-    .btn-secondary:disabled { opacity: .5; cursor: not-allowed; }
-    .btn-secondary svg { flex: none; color: var(--accent); }
-    .export-note { font-size: 13px; color: var(--ink-3); margin: 10px 0 0; }
+    .pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .pill { border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 6px 12px; font-size: 14px; color: var(--ink-2); }
+    .pill b { font-family: var(--font-num); color: var(--ink); }
+
+    .cost { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; padding: 24px 28px; background: var(--accent); color: var(--accent-ink); }
+    .cost .total { font-family: var(--font-num); font-size: 32px; font-variant-numeric: tabular-nums; }
+    .cost .detail { font-size: 13px; opacity: .8; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+    .alt { padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+    .alt h3 { margin: 0; font-size: 16px; }
+    .alt p { margin: 0; color: var(--ink-2); font-size: 14px; flex: 1; }
+    .alt .price { border-top: 1px solid var(--line); padding-top: 12px; margin-top: 4px; display: flex; justify-content: space-between; align-items: baseline; font-family: var(--font-num); }
+
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .panel { padding: 24px; }
+    .panel ul { margin: 0; padding-left: 18px; display: grid; gap: 8px; color: var(--ink-2); }
+    .panel.warn { background: var(--warn-soft); border-color: #EBD3CB; }
+    .panel.warn h3, .panel.warn ul { color: var(--warn); }
+    .refine { list-style: none; padding: 0 !important; }
+    .refine button { width: 100%; text-align: left; background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 14px; color: var(--ink-2); cursor: pointer; }
+    .refine button:hover { border-color: var(--accent); color: var(--ink); }
+
+    /* Modal */
+    dialog { border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; max-width: 520px; background: var(--surface); color: var(--ink); box-shadow: var(--shadow); }
+    dialog::backdrop { background: rgba(23,22,20,.4); }
+    dialog p { color: var(--ink-2); }
 
     /* Toast */
-    .toast {
-      position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 12px);
-      background: var(--dark); color: #fff; padding: 12px 20px; border-radius: 10px; font-size: 14px;
-      box-shadow: var(--shadow); opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; z-index: 20;
-    }
+    .toast { position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 12px); background: var(--ink); color: var(--bg); padding: 12px 20px; border-radius: var(--radius-sm); font-size: 14px; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; z-index: 30; }
     .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
-    /* Faser / tidslinje */
-    .phases { margin: 24px 28px 0; }
-    .phases h3 { margin: 0 0 16px; font-size: 16px; font-weight: 600; }
-    .timeline { list-style: none; margin: 0 0 20px; padding: 0 0 0 22px; border-left: 2px solid var(--line); display: grid; gap: 18px; }
-    .timeline li { position: relative; }
-    .timeline li::before {
-      content: ''; position: absolute; left: -29px; top: 5px; width: 12px; height: 12px;
-      border-radius: 50%; background: var(--accent); border: 2px solid var(--surface);
-    }
-    .phase-name { font-weight: 600; font-size: 15px; }
-    .phase-name span { font-weight: 400; color: var(--ink-3); }
-    .phase-instruction { margin: 2px 0 0; color: var(--ink-2); font-size: 15px; }
-    .rationale { background: var(--surface-2); border-radius: 12px; padding: 16px 18px; font-size: 15px; color: var(--ink-2); }
-    .rationale strong { display: block; color: var(--accent-ink); font-size: 13px; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 4px; }
-    .other-protocols { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 16px; }
-    .other-protocols h4 { margin: 0 0 8px; font-size: 14px; font-weight: 600; }
-    .other-protocols ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; font-size: 14px; color: var(--ink-2); }
+    footer.site { border-top: 1px solid var(--line); margin-top: 96px; padding: 32px 0 64px; }
+    footer.site p { margin: 0 0 8px; max-width: 72ch; font-size: 13px; line-height: 20px; color: var(--ink-3); }
 
-    .alt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
-    .alt { padding: 20px; display: flex; flex-direction: column; gap: 8px; }
-    .alt h3 { margin: 0; font-size: 16px; font-weight: 600; line-height: 1.35; }
-    .alt p { margin: 0; color: var(--ink-2); font-size: 14px; flex: 1; }
-    .alt-price { font-weight: 600; font-variant-numeric: tabular-nums; padding-top: 12px; border-top: 1px solid var(--line); margin-top: 4px; display: flex; justify-content: space-between; align-items: baseline; }
-    .alt-price small { font-weight: 400; color: var(--ink-3); font-size: 13px; }
-
-    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .panel { padding: 24px; }
-    .panel h3 { display: flex; align-items: center; gap: 8px; margin: 0 0 12px; font-size: 16px; font-weight: 600; }
-    .panel ul { margin: 0; padding-left: 18px; display: grid; gap: 8px; font-size: 15px; color: var(--ink-2); }
-    .panel.warn { background: var(--warn-bg); border-color: var(--warn-line); box-shadow: none; }
-    .panel.warn h3, .panel.warn ul { color: var(--warn-ink); }
-    .followups { list-style: none; padding: 0 !important; }
-    .followups button {
-      width: 100%; text-align: left; background: var(--bg); border: 1px solid var(--line); border-radius: 10px;
-      padding: 10px 14px; font-size: 14px; color: var(--ink-2); cursor: pointer; transition: all .15s;
-    }
-    .followups button:hover { border-color: var(--accent); color: var(--ink); }
-
-    /* Footer */
-    footer { border-top: 1px solid var(--line); margin-top: 64px; padding: 32px 0 48px; font-size: 13px; color: var(--ink-3); }
-    footer p { margin: 0 0 8px; max-width: 70ch; }
-
-    @media (max-width: 680px) {
-      .hero { padding: 48px 0 32px; }
-      .form-card, .top-head { padding: 20px; }
-      .form-card { padding: 20px; }
+    @media (max-width: 640px) {
+      .hero { padding: 56px 0 32px; }
+      h1 { font-size: 40px; line-height: 44px; }
+      .wrap { padding: 0 16px; }
+      .form-card, .pad, .top-head { padding: 20px; }
       .stats { grid-template-columns: 1fr; }
       .stat { padding: 16px 20px; }
-      .recon { margin: 20px 20px 0; }
-      .price-bar { padding: 20px; }
-      .two-col { grid-template-columns: 1fr; }
+      .cost { padding: 20px; }
+      .two { grid-template-columns: 1fr; }
+      .top h2.name { font-size: 32px; line-height: 36px; }
       .btn { width: 100%; }
-      .nav-tag { display: none; }
+      .results { gap: 48px; }
     }
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation: none !important; transition: none !important; }
-    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
   </style>
 </head>
 <body>
 
-  <nav class="nav">
-    <div class="container">
-      <a href="/" class="brand" aria-label="Orvexis startsida">
-        <svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="16" cy="16" r="5" fill="currentColor"/></svg>
-        Orvexis
+  <header class="site">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Amida home">
+        <svg width="30" height="16" viewBox="0 0 32 16" aria-hidden="true"><circle cx="5" cy="8" r="4" fill="currentColor"/><circle cx="27" cy="8" r="4" fill="currentColor"/><rect x="8" y="7.3" width="16" height="1.4" fill="currentColor"/></svg>
+        <span class="wordmark">Amida</span>
       </a>
-      <span class="nav-tag">Protocol Engine</span>
+      <button type="button" class="navlink" id="howWeChoose">How we choose</button>
     </div>
-  </nav>
+  </header>
 
-  <main class="container">
-    <header class="hero">
-      <span class="eyebrow">Forskningsbaserad analys</span>
-      <h1>Ditt skräddarsydda peptidprotokoll</h1>
-      <p class="lede">Beskriv ditt mål. Vi analyserar vår forskningsdatabas och tar fram ett komplett protokoll med dosering, spädning och kostnad.</p>
+  <main class="wrap">
+    <div class="hero narrow">
+      <span class="eyebrow">Research-based protocol builder</span>
+      <h1>Your peptide protocol, calculated.</h1>
+      <p class="lede">Describe your goal. We match it to our research database, work out dosing, mixing and cost, and show you exactly what to do.</p>
       <div class="trust">
-        <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 19.5V4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/><path d="M8 7h8M8 11h6"/></svg>38 peptider i databasen</span>
-        <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 3h6M10 3v6L4.5 18.5A2 2 0 0 0 6.3 21.5h11.4a2 2 0 0 0 1.8-3L14 9V3"/></svg>Studier &amp; användardata</span>
-        <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Svar på under en minut</span>
+        <span id="trustCount">Peptides in the database</span>
+        <span>Sources on every protocol</span>
+        <span>Math done in code, not by AI</span>
       </div>
-    </header>
+    </div>
 
-    <section class="card form-card" aria-labelledby="formLabel">
+    <section class="card form-card narrow">
       <form id="protocolForm" novalidate>
-        <label id="formLabel" for="userQuery">Vad är ditt primära mål eller problem?</label>
-        <textarea id="userQuery" maxlength="1000" required placeholder="Exempel: Jag har haft ont i knät i en månad efter löpning och sover dåligt…"></textarea>
-        <div class="examples">
-          <span class="examples-label">Eller välj ett exempel:</span>
-          <button type="button" class="chip">Snabbare återhämtning efter senskada</button>
-          <button type="button" class="chip">Gå ner 10 kg i vikt</button>
-          <button type="button" class="chip">Bättre sömn och mindre stress</button>
-          <button type="button" class="chip">Hud, hår och anti-aging</button>
-          <button type="button" class="chip">Mer fokus och mental skärpa</button>
+        <label class="field" for="userQuery">What do you want to improve?</label>
+        <textarea id="userQuery" maxlength="500" required placeholder="e.g. My knee has hurt for a month since I started running…"></textarea>
+        <div class="chips">
+          <span class="label">Or pick an example</span>
+          <button type="button" class="chip" aria-pressed="false">Recover from a tendon injury</button>
+          <button type="button" class="chip" aria-pressed="false">Lose weight</button>
+          <button type="button" class="chip" aria-pressed="false">Sleep better, stress less</button>
+          <button type="button" class="chip" aria-pressed="false">Skin, hair &amp; healthy aging</button>
+          <button type="button" class="chip" aria-pressed="false">Focus and mental clarity</button>
         </div>
-        <div class="form-footer">
-          <span class="char-count" id="charCount">0 / 1000</span>
+        <div class="form-foot">
+          <span class="small num" id="charCount">0 / 500</span>
           <button type="submit" id="submitBtn" class="btn">
-            Skapa mitt protokoll
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            Build my protocol
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </button>
         </div>
       </form>
     </section>
 
-    <div id="errorBox" class="alert hidden" role="alert">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+    <div id="errorBox" class="callout warn hidden narrow" role="alert">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="flex:none;margin-top:3px"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
       <span id="errorText"></span>
     </div>
 
-    <section id="loader" class="card loader hidden" aria-live="polite">
-      <ul class="loader-steps">
-        <li><span class="dot"></span>Analyserar ditt mål</li>
-        <li><span class="dot"></span>Söker i forskningsdatabasen</li>
-        <li><span class="dot"></span>Matchar mot vårt sortiment</li>
-        <li><span class="dot"></span>Beräknar dosering och spädning</li>
-      </ul>
+    <section id="loader" class="card loader hidden narrow" aria-live="polite">
+      <ol>
+        <li><span class="dot"></span>Checking safety</li>
+        <li><span class="dot"></span>Matching your goal</li>
+        <li><span class="dot"></span>Calculating dose and mixing</li>
+        <li><span class="dot"></span>Building your schedule</li>
+      </ol>
     </section>
 
     <div id="results" class="results hidden" aria-live="polite">
       <section class="card top">
         <div class="top-head">
-          <div class="meta-row">
-            <span class="badge">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.9L22 9.6l-5.5 4.8L18.2 22 12 18.3 5.8 22l1.7-7.6L2 9.6l7.1-.7z"/></svg>
-              Rekommenderat
-            </span>
-            <span id="topCategory" class="category"></span>
-            <span id="topStock" class="stock"></span>
+          <div class="meta">
+            <span class="label" id="topCategory"></span>
+            <span class="stock" id="topStock"></span>
+            <!-- Evidence badge goes here once data/peptides.json carries evidenceGrade.
+                 Left out deliberately: a grade nobody verified must not be shown. -->
           </div>
-          <h2 id="topName"></h2>
-          <div id="topVariantName" class="badge hidden" style="margin-bottom:12px"></div>
-          <p id="topPitch" class="pitch"></p>
+          <h2 class="name" id="topName"></h2>
+          <div class="variant hidden" id="topVariant"></div>
+          <p class="why" id="topWhy"></p>
 
           <div class="exports">
-            <button type="button" id="btnExportNotes" class="btn-secondary">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4a2 2 0 0 1 2-2h8l6 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg>
-              <span>Spara till Anteckningar</span>
+            <button type="button" id="btnExportNotes" class="btn-ghost">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 4a2 2 0 0 1 2-2h8l6 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg>
+              Save to Notes
             </button>
-            <button type="button" id="btnExportCalendar" class="btn-secondary">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
-              <span>Lägg in påminnelser i kalendern</span>
+            <button type="button" id="btnExportCalendar" class="btn-ghost">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+              Add reminders to calendar
             </button>
           </div>
-          <p id="exportNote" class="export-note hidden"></p>
+          <p class="export-note small hidden" id="exportNote"></p>
         </div>
 
-        <div id="phasesSection" class="phases hidden">
-          <h3>Kurens upplägg</h3>
-          <ul id="protocolPhases" class="timeline"></ul>
-          <div id="rationaleBox" class="rationale hidden">
-            <strong>Varför kuren ser ut så här</strong>
-            <span id="cycleRationale"></span>
+        <div class="stats">
+          <div class="stat"><div class="label">Dose</div><div class="value text" id="topDose"></div></div>
+          <div class="stat"><div class="label">Cycle</div><div class="value" id="topCycle"></div></div>
+          <div class="stat"><div class="label">Injections</div><div class="value" id="topInjections"></div></div>
+        </div>
+
+        <div class="pad hidden" id="phasesSection">
+          <h3>Your protocol</h3>
+          <ul class="timeline" id="topPhases"></ul>
+          <div class="rationale hidden" id="rationaleBox">
+            <span class="label" style="display:block;margin-bottom:4px">Why it's structured this way</span>
+            <span id="topRationale"></span>
           </div>
-          <div id="otherProtocolsBox" class="other-protocols hidden">
-            <h4>Andra vanliga upplägg för denna peptid</h4>
+          <div class="otherp hidden" id="otherProtocolsBox">
+            <h3 style="font-size:15px">Other protocols for this peptide</h3>
             <ul id="otherProtocols"></ul>
           </div>
         </div>
 
-        <div class="stats">
-          <div class="stat"><div class="stat-label">Dosering</div><div id="topDosage" class="stat-value"></div></div>
-          <div class="stat"><div class="stat-label">Kurens längd</div><div id="topCycle" class="stat-value"></div></div>
-          <div class="stat"><div class="stat-label">Förväntat resultat</div><div id="topExpectation" class="stat-value"></div></div>
-        </div>
-
-        <div id="topReconstitutionBox" class="recon hidden">
-          <h3>Spädning &amp; injektion</h3>
-          <p id="topReconExplanation"></p>
+        <div class="pad hidden" id="reconBox" style="border-top:1px solid var(--line)">
+          <h3>Mixing &amp; dosing</h3>
+          <p style="color:var(--ink-2);margin:0" id="topReconExplanation"></p>
+          <svg class="syringe" id="syringeSvg" viewBox="0 0 320 54" role="img" aria-label="Insulin syringe"></svg>
+          <div class="draw-label" id="drawLabel"></div>
           <div class="pills">
-            <span class="pill">Bakteriostatiskt vatten: <strong id="topBacWater"></strong></span>
-            <span class="pill">Per dos: <strong id="topUnits"></strong></span>
+            <span class="pill">Bacteriostatic water <b id="topBacWater"></b></span>
+            <span class="pill">Per dose <b id="topUnits"></b></span>
           </div>
         </div>
 
-        <div class="price-bar">
+        <div class="cost">
           <div>
-            <div class="price-label">Total kostnad för kuren</div>
-            <div id="topPriceDetail" class="price-detail"></div>
+            <div class="label" style="color:var(--accent-ink);opacity:.75">Total cost</div>
+            <div class="detail" id="topPriceDetail"></div>
           </div>
-          <div id="topTotalPrice" class="price-total"></div>
+          <div class="total" id="topTotal"></div>
         </div>
       </section>
 
       <section id="altSection">
-        <h2 class="section-title">Alternativa protokoll</h2>
-        <div id="alternativesContainer" class="alt-grid"></div>
+        <h2 class="section">Other options</h2>
+        <div class="grid" id="alternatives"></div>
       </section>
 
-      <div class="two-col">
-        <section id="contraContainer" class="card panel warn hidden">
-          <h3>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/></svg>
-            Viktigt att veta
-          </h3>
-          <ul id="resContraindications"></ul>
+      <div class="two">
+        <section class="card panel warn hidden" id="safetyBox">
+          <h3>Safety</h3>
+          <ul id="contraindications"></ul>
         </section>
-        <section id="followUpContainer" class="card panel hidden">
-          <h3>Förfina ditt protokoll</h3>
-          <ul id="resFollowUps" class="followups"></ul>
+        <section class="card panel hidden" id="refineBox">
+          <h3>Make it more precise</h3>
+          <ul class="refine" id="followUps"></ul>
         </section>
       </div>
     </div>
   </main>
 
-  <footer>
-    <div class="container">
-      <p>Informationen på denna sida är genererad utifrån forskningsdata och utgör inte medicinsk rådgivning. Produkterna säljs för forskningsändamål. Rådgör alltid med legitimerad vårdpersonal innan du påbörjar någon behandling.</p>
-      <p>© <span id="year"></span> Orvexis</p>
+  <dialog id="chooseDialog">
+    <h3>How we choose</h3>
+    <p>We only recommend protocols from our database, with doses and combinations taken from published sources. AI picks and explains; all numbers and combinations are calculated in code. When there's no data on combining two compounds, we schedule them one after another.</p>
+    <form method="dialog"><button class="btn">Close</button></form>
+  </dialog>
+
+  <footer class="site">
+    <div class="wrap">
+      <p>Amida provides educational information based on published research. It is not medical advice. Products are sold for research use. Talk to a licensed clinician before starting any compound.</p>
+      <p>© <span id="year"></span> Amida</p>
     </div>
   </footer>
 
   <script>
-    // Lokalt (filen öppnad direkt, Live Server på :5500 osv.) går anropen till Node-servern på :3000.
-    // I produktion, när Node-servern själv serverar sidan, används samma adress.
+    // Local dev (file://, Live Server on :5500) talks to the API server on :3000.
+    // In production the API serves this page, so same origin.
     const API_PORT = '3000';
     const isLocalDev = location.protocol === 'file:' ||
       (['localhost', '127.0.0.1'].includes(location.hostname) && location.port !== API_PORT);
     const API_BASE = isLocalDev ? `http://localhost:${API_PORT}` : '';
-    const sek = new Intl.NumberFormat('sv-SE', { style: 'currency', currency: 'SEK', maximumFractionDigits: 0 });
 
-    const $ = id => document.getElementById(id);
+    // Prices are still the SEK figures from the old catalog. They become USD once
+    // priceUsd is filled in for every product in data/peptides.json.
+    const money = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'SEK', maximumFractionDigits: 0 });
+
+    const $ = (id) => document.getElementById(id);
     const form = $('protocolForm');
     const input = $('userQuery');
     const loader = $('loader');
     const results = $('results');
     const submitBtn = $('submitBtn');
-    const loaderSteps = [...loader.querySelectorAll('li')];
+    const steps = [...loader.querySelectorAll('li')];
     let stepTimer;
-    let currentProtocol = null;
+    let current = null;
 
     $('year').textContent = new Date().getFullYear();
+    $('howWeChoose').addEventListener('click', () => $('chooseDialog').showModal());
 
-    const updateCount = () => { $('charCount').textContent = `${input.value.length} / 1000`; };
+    const updateCount = () => { $('charCount').textContent = `${input.value.length} / 500`; };
     input.addEventListener('input', updateCount);
 
-    document.querySelectorAll('.chip').forEach(chip => {
+    document.querySelectorAll('.chip').forEach((chip) => {
       chip.addEventListener('click', () => {
-        input.value = chip.textContent;
+        const on = chip.getAttribute('aria-pressed') === 'true';
+        document.querySelectorAll('.chip').forEach((c) => c.setAttribute('aria-pressed', 'false'));
+        chip.setAttribute('aria-pressed', String(!on));
+        input.value = on ? '' : chip.textContent.trim();
         updateCount();
         input.focus();
       });
     });
 
-    // Enter skickar, Shift+Enter ger ny rad
-    input.addEventListener('keydown', e => {
+    input.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); form.requestSubmit(); }
     });
 
@@ -421,22 +404,18 @@
 
     function startLoader() {
       let i = 0;
-      loaderSteps.forEach(li => li.className = '');
-      loaderSteps[0].className = 'active';
+      steps.forEach((li) => (li.className = ''));
+      steps[0].className = 'active';
       loader.classList.remove('hidden');
       stepTimer = setInterval(() => {
-        if (i >= loaderSteps.length - 1) return clearInterval(stepTimer);
-        loaderSteps[i].className = 'done';
-        loaderSteps[++i].className = 'active';
+        if (i >= steps.length - 1) return clearInterval(stepTimer);
+        steps[i].className = 'done';
+        steps[++i].className = 'active';
       }, 2500);
     }
+    const stopLoader = () => { clearInterval(stepTimer); loader.classList.add('hidden'); };
 
-    function stopLoader() {
-      clearInterval(stepTimer);
-      loader.classList.add('hidden');
-    }
-
-    // Skapar element med textContent — AI-text sätts aldrig som HTML
+    // AI text is always inserted as text, never as HTML
     function el(tag, className, text) {
       const node = document.createElement(tag);
       if (className) node.className = className;
@@ -444,228 +423,219 @@
       return node;
     }
 
-    function renderList(listId, containerId, items, render) {
-      const list = $(listId);
-      list.replaceChildren(...items.map(render));
-      $(containerId).classList.toggle('hidden', items.length === 0);
+    function toast(message) {
+      const node = el('div', 'toast', message);
+      document.body.append(node);
+      requestAnimationFrame(() => node.classList.add('show'));
+      setTimeout(() => { node.classList.remove('show'); setTimeout(() => node.remove(), 300); }, 2600);
+    }
+
+    /** U-100 barrel: a tick every unit, a number every 10, filled to the dose. */
+    function drawSyringe(units) {
+      const svg = $('syringeSvg');
+      const x0 = 14, x1 = 286, y = 16, h = 20;
+      const ns = 'http://www.w3.org/2000/svg';
+      const add = (tag, attrs) => { const n = document.createElementNS(ns, tag); for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v); svg.append(n); return n; };
+      svg.replaceChildren();
+
+      const span = x1 - x0;
+      const clamped = Math.max(0, Math.min(100, units));
+      add('rect', { class: 'barrel', x: x0, y, width: span, height: h, rx: 3 });
+      add('rect', { class: 'fill', x: x0 + 1, y: y + 1, width: Math.max(0, (span * clamped) / 100 - 2), height: h - 2, rx: 2 });
+      add('rect', { class: 'plunger', x: x0 + (span * clamped) / 100 - 2, y: y - 3, width: 3, height: h + 6, rx: 1 });
+      add('rect', { class: 'barrel', x: x1, y: y + h / 2 - 1.5, width: 20, height: 3, rx: 1.5 });
+
+      for (let u = 0; u <= 100; u++) {
+        const x = x0 + (span * u) / 100;
+        const major = u % 10 === 0;
+        add('line', { class: `tick${major ? ' major' : ''}`, x1: x, x2: x, y1: y + h, y2: y + h + (major ? 6 : 3), 'stroke-width': major ? 1 : 0.5 });
+        if (major) add('text', { x, y: y + h + 15, 'text-anchor': 'middle' }).textContent = u;
+      }
     }
 
     function render(data) {
       const top = data.numberOneOption;
-      currentProtocol = top;
+      current = top;
+
       $('topCategory').textContent = top.category || '';
-      $('topStock').textContent = top.inStock ? 'I lager' : 'Tillfälligt slut';
+      $('topStock').textContent = top.inStock ? 'In stock' : 'Out of stock';
       $('topStock').classList.toggle('out', !top.inStock);
       $('topName').textContent = top.name;
-      $('topPitch').textContent = top.salesPitch || '';
-      $('topDosage').textContent = top.dosageFrequency || '—';
-      $('topCycle').textContent = `${top.cycleWeeks ?? '—'} veckor · ${top.vialsNeeded} ${top.vialsNeeded === 1 ? 'vial' : 'vialer'}`;
-      $('topExpectation').textContent = top.expectedResults || '—';
+      $('topWhy').textContent = top.salesPitch || '';
+      $('topVariant').textContent = top.protocolVariantName || '';
+      $('topVariant').classList.toggle('hidden', !top.protocolVariantName);
 
-      $('topVariantName').textContent = top.protocolVariantName || '';
-      $('topVariantName').classList.toggle('hidden', !top.protocolVariantName);
+      $('topDose').textContent = top.dosageFrequency || '—';
+      $('topCycle').textContent = `${top.cycleWeeks ?? '—'} weeks`;
+      $('topInjections').textContent = (top.schedule || []).length || '—';
 
       const phases = top.protocolPhases || [];
-      $('protocolPhases').replaceChildren(...phases.map(phase => {
+      $('topPhases').replaceChildren(...phases.map((p) => {
         const li = el('li');
-        const name = el('div', 'phase-name', phase.phaseName);
-        if (phase.duration) name.append(el('span', null, ` · ${phase.duration}`));
-        li.append(name, el('p', 'phase-instruction', phase.instruction));
+        const name = el('div', 'phase-name', p.phaseName);
+        if (p.duration) name.append(el('span', null, ` · ${p.duration}`));
+        li.append(name, el('p', 'phase-instruction', p.instruction));
         return li;
       }));
-      $('cycleRationale').textContent = top.cycleRationale || '';
+      $('topRationale').textContent = top.cycleRationale || '';
       $('rationaleBox').classList.toggle('hidden', !top.cycleRationale);
-
       const others = top.otherAvailableProtocols || [];
-      $('otherProtocols').replaceChildren(...others.map(p => el('li', null, p)));
+      $('otherProtocols').replaceChildren(...others.map((o) => el('li', null, o)));
       $('otherProtocolsBox').classList.toggle('hidden', others.length === 0);
       $('phasesSection').classList.toggle('hidden', phases.length === 0 && !top.cycleRationale);
 
-      // Kalenderknappen fungerar bara om Gemini gav oss konkreta injektionstillfällen
-      const eventCount = upcomingEvents(top).length;
-      $('btnExportCalendar').disabled = eventCount === 0;
-      $('exportNote').textContent = eventCount
-        ? `Kalenderfilen innehåller ${eventCount} injektionstillfällen med påminnelse 15 minuter innan.`
-        : 'Inga exakta injektionstider kunde tas fram för detta protokoll.';
-      $('exportNote').classList.remove('hidden');
-
       const recon = top.reconstitution;
-      $('topReconstitutionBox').classList.toggle('hidden', !recon);
+      $('reconBox').classList.toggle('hidden', !recon);
       if (recon) {
         $('topReconExplanation').textContent = recon.explanation || '';
         $('topBacWater').textContent = `${recon.bacWaterMl} ml`;
-        $('topUnits').textContent = `${recon.unitsOnSyringe} enheter (U-100)`;
+        $('topUnits').textContent = `${recon.unitsOnSyringe} units`;
+        drawSyringe(Number(recon.unitsOnSyringe) || 0);
+        $('drawLabel').textContent = `Draw to ${recon.unitsOnSyringe} units`;
       }
 
-      $('topPriceDetail').textContent = `${top.vialsNeeded} × ${sek.format(top.pricePerVialSek)}`;
-      $('topTotalPrice').textContent = sek.format(top.totalCostSek);
+      $('topPriceDetail').textContent = `${top.vialsNeeded} × ${money.format(top.pricePerVialSek)}`;
+      $('topTotal').textContent = money.format(top.totalCostSek);
+
+      const upcoming = upcomingEvents(top).length;
+      $('btnExportCalendar').disabled = upcoming === 0;
+      $('exportNote').textContent = upcoming
+        ? `${upcoming} injections, each with a reminder 15 minutes before.`
+        : 'No exact injection times available for this protocol.';
+      $('exportNote').classList.remove('hidden');
 
       const alts = data.alternatives || [];
-      $('alternativesContainer').replaceChildren(...alts.map(alt => {
+      $('alternatives').replaceChildren(...alts.map((a) => {
         const card = el('article', 'card alt');
-        card.append(el('span', 'category', alt.category), el('h3', null, alt.name), el('p', null, alt.purpose));
-        const price = el('div', 'alt-price');
-        price.append(el('small', null, `${alt.vialsNeeded} × ${sek.format(alt.pricePerVialSek)}`), el('span', null, sek.format(alt.totalCostSek)));
+        card.append(el('span', 'label', a.category), el('h3', null, a.name), el('p', null, a.purpose));
+        const price = el('div', 'price');
+        price.append(el('span', 'small', `${a.vialsNeeded} × ${money.format(a.pricePerVialSek)}`), el('span', null, money.format(a.totalCostSek)));
         card.append(price);
         return card;
       }));
       $('altSection').classList.toggle('hidden', alts.length === 0);
 
-      renderList('resContraindications', 'contraContainer', data.contraindications || [], c => el('li', null, c));
-      renderList('resFollowUps', 'followUpContainer', data.followUpQuestions || [], q => {
+      const contra = data.contraindications || [];
+      $('contraindications').replaceChildren(...contra.map((c) => el('li', null, c)));
+      $('safetyBox').classList.toggle('hidden', contra.length === 0);
+
+      const follow = data.followUpQuestions || [];
+      $('followUps').replaceChildren(...follow.map((q) => {
         const li = el('li');
         const btn = el('button', null, q);
         btn.type = 'button';
-        btn.title = 'Lägg till i din beskrivning';
         btn.addEventListener('click', () => {
           input.value = `${input.value.trim()}\n\n${q} `;
           updateCount();
-          window.scrollTo({ top: form.getBoundingClientRect().top + scrollY - 100, behavior: 'smooth' });
+          form.scrollIntoView({ behavior: 'smooth', block: 'center' });
           input.focus();
         });
         li.append(btn);
         return li;
-      });
+      }));
+      $('refineBox').classList.toggle('hidden', follow.length === 0);
 
       results.classList.remove('hidden');
       results.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    /* ---------- Export: Anteckningar och kalender ---------- */
-
-    function toast(message) {
-      const node = el('div', 'toast', message);
-      document.body.append(node);
-      requestAnimationFrame(() => node.classList.add('show'));
-      setTimeout(() => {
-        node.classList.remove('show');
-        setTimeout(() => node.remove(), 300);
-      }, 2600);
-    }
+    /* ---------- Exports ---------- */
 
     function protocolAsText(top) {
-      const lines = [`ORVEXIS PROTOKOLL: ${top.name}`];
+      const lines = [`AMIDA PROTOCOL: ${top.name}`];
       if (top.protocolVariantName) lines.push(top.protocolVariantName);
-      lines.push('', `Dosering: ${top.dosageFrequency || '—'}`, `Längd: ${top.cycleWeeks ?? '—'} veckor (${top.vialsNeeded} vialer)`);
-
+      lines.push('', `Dose: ${top.dosageFrequency || '—'}`, `Cycle: ${top.cycleWeeks ?? '—'} weeks (${top.vialsNeeded} vials)`);
       if (top.protocolPhases?.length) {
-        lines.push('', 'UPPLÄGG:');
-        top.protocolPhases.forEach(p => lines.push(`- ${p.phaseName}${p.duration ? ` (${p.duration})` : ''}: ${p.instruction}`));
+        lines.push('', 'PROTOCOL:');
+        top.protocolPhases.forEach((p) => lines.push(`- ${p.phaseName}${p.duration ? ` (${p.duration})` : ''}: ${p.instruction}`));
       }
       if (top.reconstitution) {
-        lines.push('', 'SPÄDNING:', top.reconstitution.explanation,
-          `Bakteriostatiskt vatten: ${top.reconstitution.bacWaterMl} ml`,
-          `Per dos: ${top.reconstitution.unitsOnSyringe} enheter (U-100)`);
+        lines.push('', 'MIXING:', top.reconstitution.explanation,
+          `Bacteriostatic water: ${top.reconstitution.bacWaterMl} ml`,
+          `Per dose: ${top.reconstitution.unitsOnSyringe} units (U-100)`);
       }
-      lines.push('', `Total kostnad: ${sek.format(top.totalCostSek)} (${top.vialsNeeded} × ${sek.format(top.pricePerVialSek)})`,
-        '', 'Detta är inte medicinsk rådgivning. Rådgör med legitimerad vårdpersonal.');
+      lines.push('', `Total: ${money.format(top.totalCostSek)}`, '', 'Not medical advice. Talk to a licensed clinician.');
       return lines.join('\n');
     }
 
     $('btnExportNotes').addEventListener('click', async () => {
-      if (!currentProtocol) return;
-      const text = protocolAsText(currentProtocol);
-
-      // På iPhone öppnar detta Apples delningsmeny, där "Anteckningar" finns
+      if (!current) return;
+      const text = protocolAsText(current);
       if (navigator.share) {
-        try {
-          await navigator.share({ title: `Orvexis — ${currentProtocol.name}`, text });
-          return;
-        } catch (err) {
-          if (err.name === 'AbortError') return; // användaren stängde menyn
-        }
+        try { await navigator.share({ title: `Amida — ${current.name}`, text }); return; }
+        catch (err) { if (err.name === 'AbortError') return; }
       }
       try {
         await navigator.clipboard.writeText(text);
-        toast('Protokollet kopierades — klistra in där du vill spara det.');
-      } catch {
-        showError('Kunde inte kopiera protokollet. Markera texten på sidan och kopiera manuellt.');
-      }
+        toast('Protocol copied — paste it wherever you keep notes.');
+      } catch { showError('Could not copy the protocol. Select the text on the page instead.'); }
     });
 
-    // .ics-format: rader avslutas med CRLF, och tecknen \ ; , och radbrytning måste escapas
-    function icsEscape(text) {
-      return String(text).replace(/[\\;,]/g, m => '\\' + m).replace(/\r?\n/g, '\\n');
-    }
+    const icsEscape = (t) => String(t).replace(/[\\;,]/g, (m) => '\\' + m).replace(/\r?\n/g, '\\n');
+    const icsDate = (d) => {
+      const p = (n) => String(n).padStart(2, '0');
+      return `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}T${p(d.getHours())}${p(d.getMinutes())}00`;
+    };
 
-    function icsDate(date) {
-      const p = n => String(n).padStart(2, '0');
-      // Lokal tid utan Z — klockslaget ska gälla oavsett tidszon
-      return `${date.getFullYear()}${p(date.getMonth() + 1)}${p(date.getDate())}T${p(date.getHours())}${p(date.getMinutes())}00`;
-    }
-
-    // Tillfällen som redan passerat idag blir bara ett larm som ringer direkt — hoppa över dem
+    // Times already past today would fire instantly, so they are skipped
     function upcomingEvents(top) {
       const now = Date.now();
-      return (top.schedule || []).map(item => {
+      return (top.schedule || []).map((item) => {
         const start = new Date();
         start.setDate(start.getDate() + item.dayOffset);
-        const [h, m] = item.time.split(':').map(Number);
+        const [h, m] = String(item.time).split(':').map(Number);
         start.setHours(h, m, 0, 0);
         return { item, start };
-      }).filter(e => e.start.getTime() > now);
+      }).filter((e) => e.start.getTime() > now);
     }
 
     function buildIcs(top) {
       const stamp = icsDate(new Date()) + 'Z';
-      const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Orvexis//Protocol Engine//SV', 'CALSCALE:GREGORIAN'];
-
-      upcomingEvents(top).forEach(({ item, start }, i) => {
+      const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Amida//Protocol//EN', 'CALSCALE:GREGORIAN'];
+      for (const { item, start } of upcomingEvents(top)) {
         const end = new Date(start.getTime() + 15 * 60000);
-
         lines.push(
           'BEGIN:VEVENT',
-          `UID:orvexis-${Date.now()}-${i}@orvexis.local`,
+          `UID:${crypto.randomUUID()}@amida`,
           `DTSTAMP:${stamp}`,
           `DTSTART:${icsDate(start)}`,
           `DTEND:${icsDate(end)}`,
-          `SUMMARY:${icsEscape(`Injektion: ${top.name}`)}`,
-          `DESCRIPTION:${icsEscape(`Dos: ${item.dosage || top.dosageFrequency || ''}\nPå sprutan: ${top.reconstitution?.unitsOnSyringe ?? '—'} enheter (U-100)`)}`,
+          `SUMMARY:${icsEscape(`Injection: ${top.name}`)}`,
+          `DESCRIPTION:${icsEscape(`Dose: ${item.dosage || top.dosageFrequency || ''}\nDraw to: ${top.reconstitution?.unitsOnSyringe ?? '—'} units (U-100)`)}`,
           'BEGIN:VALARM', 'TRIGGER:-PT15M', 'ACTION:DISPLAY',
-          `DESCRIPTION:${icsEscape('Dags att förbereda injektionen')}`, 'END:VALARM',
+          `DESCRIPTION:${icsEscape('Time to prepare your injection')}`, 'END:VALARM',
           'END:VEVENT'
         );
-      });
-
+      }
       lines.push('END:VCALENDAR');
       return lines.join('\r\n');
     }
 
     $('btnExportCalendar').addEventListener('click', async () => {
-      if (!currentProtocol || upcomingEvents(currentProtocol).length === 0) return;
-      const ics = buildIcs(currentProtocol);
-      const file = new File([ics], 'orvexis-protokoll.ics', { type: 'text/calendar' });
-
-      // iPhone: dela filen så att Kalender kan ta emot den direkt
+      if (!current || upcomingEvents(current).length === 0) return;
+      const file = new File([buildIcs(current)], 'amida-protocol.ics', { type: 'text/calendar' });
       if (navigator.canShare?.({ files: [file] })) {
-        try {
-          await navigator.share({ files: [file], title: 'Orvexis-protokoll' });
-          return;
-        } catch (err) {
-          if (err.name === 'AbortError') return;
-        }
+        try { await navigator.share({ files: [file], title: 'Amida protocol' }); return; }
+        catch (err) { if (err.name === 'AbortError') return; }
       }
-
       const url = URL.createObjectURL(file);
       const link = el('a');
       link.href = url;
-      link.download = 'orvexis-protokoll.ics';
+      link.download = 'amida-protocol.ics';
       document.body.append(link);
       link.click();
       link.remove();
       setTimeout(() => URL.revokeObjectURL(url), 10000);
-      toast('Kalenderfilen laddades ner — öppna den för att lägga in påminnelserna.');
+      toast('Calendar file downloaded — open it to add the reminders.');
     });
+
+    /* ---------- Submit ---------- */
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const userQuery = input.value.trim();
       $('errorBox').classList.add('hidden');
-      if (!userQuery) {
-        showError('Beskriv ditt mål eller problem för att få ett protokoll.');
-        input.focus();
-        return;
-      }
+      if (!userQuery) { showError('Describe your goal to get a protocol.'); input.focus(); return; }
 
       results.classList.add('hidden');
       submitBtn.disabled = true;
@@ -675,20 +645,26 @@
         const res = await fetch(`${API_BASE}/api/protocol`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userQuery })
+          body: JSON.stringify({ userQuery }),
         });
         const data = await res.json().catch(() => ({}));
-        if (!res.ok || data.error) throw new Error(data.error || 'Något gick fel. Försök igen.');
+        if (!res.ok || data.error) throw new Error(data.error || 'Something went wrong. Please try again.');
         render(data);
       } catch (err) {
         showError(err instanceof TypeError
-          ? 'Kunde inte nå servern. Starta den med "npm start" i terminalen och försök igen.'
+          ? 'Could not reach the server. Start it with "npm start" and try again.'
           : err.message);
       } finally {
         stopLoader();
         submitBtn.disabled = false;
       }
     });
+
+    // Count in the trust row comes from the catalog, not a hard-coded number
+    fetch(`${API_BASE}/api/catalog-count`)
+      .then((r) => r.json())
+      .then((d) => { if (d.count) $('trustCount').textContent = `${d.count} peptides in the database`; })
+      .catch(() => {});
   </script>
 </body>
 </html>

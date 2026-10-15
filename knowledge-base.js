@@ -8,7 +8,7 @@ import { PEPTIDE_CATALOG } from './catalog.js';
 const DATA_DIR = path.join(__dirname, 'peptider');
 const CACHE_FILE = path.join(__dirname, 'knowledge-base.json');
 
-// Skrapade sidor som blev blockerade (429, captcha) innehåller ingen användbar data
+// Scraped pages that got blocked (429, captcha) hold no usable data
 const JUNK_MARKERS = ['Security Checkpoint', 'Too Many Requests', 'error 429'];
 
 function readSource(relPath, maxChars) {
@@ -23,22 +23,22 @@ function readSource(relPath, maxChars) {
   }
 }
 
-// Läser peptider/ och plockar ut de utdrag som faktiskt används i prompten
+// Reads peptider/ and pulls out the extracts the prompt actually uses
 function buildFromDataDir({ warn = true } = {}) {
   return PEPTIDE_CATALOG.map(p => {
     const text = p.sources
       .map((src, i) => readSource(src, i === 0 ? 2500 : 1200))
       .filter(Boolean)
       .join('\n\n');
-    if (!text && warn) console.warn(`⚠️  Ingen data hittades för ${p.name}`);
-    return `### ${p.id} — ${p.name}\n${text || '(ingen lokal data)'}`;
+    if (!text && warn) console.warn(`⚠️  No data found for ${p.name}`);
+    return `### ${p.id} — ${p.name}\n${text || '(no local data)'}`;
   }).join('\n\n');
 }
 
 /**
- * I drift finns sällan peptider/ på servern — då används den förbyggda
- * knowledge-base.json. Lokalt läses mappen direkt så att ny skrapad data
- * slår igenom utan att filen behöver byggas om.
+ * A deployed server rarely has peptider/, so it falls back to the prebuilt
+ * knowledge-base.json. Locally the folder is read directly, so new scraped data
+ * takes effect without rebuilding the file.
  */
 function loadKnowledgeBase() {
   if (fs.existsSync(DATA_DIR)) {
@@ -46,9 +46,9 @@ function loadKnowledgeBase() {
   }
   if (fs.existsSync(CACHE_FILE)) {
     const cached = JSON.parse(fs.readFileSync(CACHE_FILE, 'utf-8'));
-    return { text: cached.text, source: `knowledge-base.json (byggd ${cached.generatedAt?.slice(0, 10)})` };
+    return { text: cached.text, source: `knowledge-base.json (built ${cached.generatedAt?.slice(0, 10)})` };
   }
-  throw new Error('Hittar varken peptider/ eller knowledge-base.json — kör "npm run build:kb" lokalt först.');
+  throw new Error('Neither peptider/ nor knowledge-base.json found — run "npm run build:kb" locally first.');
 }
 
 export { buildFromDataDir, loadKnowledgeBase, CACHE_FILE, DATA_DIR };
